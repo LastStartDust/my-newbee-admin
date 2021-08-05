@@ -1,8 +1,7 @@
 <template>
     <div>
         {{ msg }}
-
-        <button @click="handleClick">发送请求</button>
+        <el-button type="primary" @click="handleClick">发送请求</el-button>
     </div>
 </template>
 <script>
