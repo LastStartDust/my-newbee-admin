@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { useElementPlus } from '@/plugins/element-plus';
 import router from '@/router/index';
+import '~/theme/element-plus-theme/index.css'
 
 // 创建应用实例
 const app = createApp(App)
