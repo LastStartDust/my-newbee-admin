@@ -406,6 +406,11 @@ is-number@^7.0.0:
   resolved "https://registry.npm.taobao.org/is-number/download/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha1-dTU0W4lnNNX4DE0GxQlVUnoU8Ss=
 
+js-cookie@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.nlark.com/js-cookie/download/js-cookie-3.0.0.tgz#db1661d5459920ec95aaf186ccf74ceb4a495164"
+  integrity sha1-2xZh1UWZIOyVqvGGzPdM60pJUWQ=
+
 json5@^1.0.1:
   version "1.0.1"
   resolved "https://registry.nlark.com/json5/download/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"

@@ -1,6 +1,8 @@
 import axios from "axios";
 import router from "@/router/index";
 import { env } from "@/utils/index";
+import { getToken } from '@/utils/auth';
+
 // 业务成功码
 const SUCCESS_CODE = 20000;
 
@@ -13,15 +15,12 @@ const service = axios.create({
   timeout: 1000 * 15, // 请求超时时间15秒
 });
 
-// 请求头，headers 信息
-axios.defaults.headers["token"] = localStorage.getItem("token") || "";
-
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
     // 发起请求之前做一些操作
     // 请求中携带token, headers['X-Token']是一个自定义请求头，需要根据实际业务情况进行替换
-    const token = localStorage.getItem("token") || "";
+    const token = getToken();
     if (token) {
       config.headers["X-Token"] = token;
     }
