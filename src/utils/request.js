@@ -2,6 +2,7 @@ import axios from "axios";
 import router from "@/router/index";
 import { env } from "@/utils/index";
 import { getToken } from '@/utils/auth';
+import { ElMessage } from 'element-plus';
 
 // 业务成功码
 const SUCCESS_CODE = 20000;
@@ -39,13 +40,13 @@ service.interceptors.response.use(
    */
   (response) => {
     if (typeof response.data !== "object") {
-      alert("服务端异常！");
+      ElMessage.error("服务端异常！");
       return Promise.reject(response);
     }
 
     // 自定义状态码不是20000，认为请求异常
     if (response.data.code !== SUCCESS_CODE) {
-      alert(response.data.message || "Error");
+      ElMessage.error(response.data.message || "Error");
       // 50008: 不合法的token; 50012: 其它地方登录; 50014: token过期;
       const tokenErrCodes = [50008, 50012, 50014];
       if (tokenErrCodes.includes(response.data.code)) {
@@ -65,7 +66,7 @@ service.interceptors.response.use(
         router.push({ name: "Login" });
       } else {
         const errMsg = getResponseErrorMsg(error);
-        alert(errMsg);
+        ElMessage.error(errMsg);
       }
     } else if (error.request) {
       // 请求已发出，但没有收到响应，例如：断网
@@ -74,14 +75,14 @@ service.interceptors.response.use(
         error.code === "ECONNABORTED" &&
         error.message.indexOf("timeout") !== -1
       ) {
-        alert("请求超时");
+        ElMessage.error("请求超时");
       }
       // 网络异常
       if (error.message === "Network Error") {
-        alert("网络异常");
+        ElMessage.error("网络异常");
       }
     } else {
-      alert("未知错误");
+      ElMessage.error("未知错误");
       // 请求被取消或者发送请求时异常
     }
     return Promise.reject(error);
