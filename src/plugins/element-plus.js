@@ -7,12 +7,35 @@ import {
   ElMessage,
   ElMessageBox,
   ElTag,
-  ElDialog
+  ElDialog,
+  ElAside,
+  ElHeader,
+  ElMain,
+  ElFooter,
+  ElContainer,
+  ElMenu,
+  ElMenuItem,
+  ElSubmenu
 } from 'element-plus'
 import 'element-plus/packages/theme-chalk/src/base.scss'
 
 // 组件列表
-const components = [ElButton, ElForm, ElFormItem, ElInput, ElTag, ElDialog]
+const components = [
+  ElButton,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElTag,
+  ElDialog,
+  ElAside,
+  ElHeader,
+  ElMain,
+  ElFooter,
+  ElContainer,
+  ElMenu,
+  ElMenuItem,
+  ElSubmenu
+]
 
 // 插件列表
 const plugins = [ElLoading, ElMessage, ElMessageBox]
