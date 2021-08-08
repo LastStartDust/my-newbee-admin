@@ -49,23 +49,25 @@
   </div>
 </template>
 <script>
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent, reactive, ref, toRefs } from "vue";
 import logo from "@/assets/logo.jpg";
 
 export default defineComponent({
   name: "App",
   setup() {
+
     const menuConfig = reactive({
       active: "1", // 当前激活的菜单
       isCollapse: false, // 是否折叠菜单
       backgroundColor: '#9780e7', // 菜单的背景色（仅支持 hex 格式）
       textColor: '#303133', //	菜单的文字颜色（仅支持 hex 格式）
-      activeTextColor: '#ffa500' //	当前激活菜单的文字颜色（仅支持 hex 格式）
+      activeTextColor: '#ffa500', // 当前激活菜单的文字颜色（仅支持 hex 格式）
+      activeBgColor: '#7966b9', // 当前激活菜单的背景色
     });
 
     return {
       logo,
-      menuConfig,
+      menuConfig
     };
   },
 });
@@ -76,7 +78,8 @@ export default defineComponent({
   height: 100vh;
 
   $asideWidth: 200px;
-  $asideColor: #9780e7;
+  // 导入js中定义的变量 参考https://github.com/vuejs/rfcs/blob/master/active-rfcs/0043-sfc-style-variables.md
+  $asideColor: v-bind('menuConfig.backgroundColor');
   .aside {
     height: 100vh;
     min-height: 100vh;
@@ -112,8 +115,15 @@ export default defineComponent({
     .menu {
       width: $asideWidth;
       min-height: 400px;
-
+      
+      :deep(.el-menu-item.is-active) {
+        background-color: v-bind('menuConfig.activeBgColor') !important;
+      }
+      :deep(.el-submenu .el-submenu__title i.el-submenu__icon-arrow.el-icon-arrow-down) {
+        color: v-bind('menuConfig.textColor');
+      }
     }
+
   }
 
   .right-container {
