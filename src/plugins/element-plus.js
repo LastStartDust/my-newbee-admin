@@ -15,7 +15,8 @@ import {
   ElContainer,
   ElMenu,
   ElMenuItem,
-  ElSubmenu
+  ElSubmenu,
+  ElScrollbar
 } from 'element-plus'
 import 'element-plus/packages/theme-chalk/src/base.scss'
 
@@ -34,7 +35,8 @@ const components = [
   ElContainer,
   ElMenu,
   ElMenuItem,
-  ElSubmenu
+  ElSubmenu,
+  ElScrollbar
 ]
 
 // 插件列表
