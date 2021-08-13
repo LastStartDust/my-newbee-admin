@@ -95,19 +95,3 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss" scoped>
-    // menu hover
-    // .submenu-title-noDropdown {
-    //   &:hover {
-    //     background-color: $menuHover !important;
-    //   }
-    //   background: $menuBg;
-    // }
-
-    // .is-active.submenu-title-noDropdown {
-    //   color: $subMenuActiveText !important;
-    //   i {
-    //     color: $subMenuActiveText !important;
-    //   }
-    // }
-</style>

@@ -5,16 +5,12 @@
       <el-menu
         :default-active="activeMenu"
         mode="vertical"
-        :background-color="backgroundColor"
-        :text-color="textColor"
-        :active-text-color="activeTextColor"
       >
         <SideItem
           v-for="route in routes"
           :key="route.path"
           :item="route"
           :base-path="route.path"
-          :active-bg-color="activeBgColor"
         />
       </el-menu>
     </el-scrollbar>
@@ -37,56 +33,14 @@ export default defineComponent({
       return "/";
     });
 
-    // 侧边栏背景颜色
-    const asideBgColor = ref("#9780e7");
-    const menuColorConfig = reactive({
-      backgroundColor: asideBgColor, // 菜单的背景色（仅支持 hex 格式）
-      textColor: "#303133", //	菜单的文字颜色（仅支持 hex 格式）
-      activeTextColor: "#ffa500", // 当前激活菜单的文字颜色（仅支持 hex 格式）
-      activeBgColor: "#7966b9", // 当前激活菜单的背景色
-    });
-
     const routes = computed(() => {
       return constantRoutes;
     });
 
     return {
       activeMenu,
-      routes,
-      ...toRefs(menuColorConfig),
-      asideBgColor,
+      routes
     };
   },
 });
 </script>
-<style lang="scss" scoped>
-.scrollbar-wrapper {
-  overflow-x: hidden !important;
-}
-
-.aside {
-  height: 100vh;
-  min-height: 100vh;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-  background-color: v-bind("asideBgColor");
-
-  .el-menu {
-    width: 100%;
-    margin-top: 10px;
-
-    :deep(.el-menu-item.is-active) {
-      // 导入js中定义的变量 参考https://github.com/vuejs/rfcs/blob/master/active-rfcs/0043-sfc-style-variables.md
-      background-color: v-bind("activeBgColor") !important;
-    }
-    :deep(.el-submenu.el-submenu__titlei.el-submenu__icon-arrow.el-icon-arrow-down) {
-      color: v-bind("textColor");
-    }
-  }
-}
-</style>

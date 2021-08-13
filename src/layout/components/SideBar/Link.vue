@@ -34,11 +34,4 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss" scoped>
-a {
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  text-decoration: none;
-}
-</style>
+

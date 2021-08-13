@@ -22,24 +22,3 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss" scoped>
-.head {
-  $logoSize: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  padding-top: 20px;
-
-  .logo {
-    display: block;
-    width: $logoSize;
-    height: $logoSize;
-
-    .logo-img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
-</style>
