@@ -16,7 +16,11 @@ import {
   ElMenu,
   ElMenuItem,
   ElSubmenu,
-  ElScrollbar
+  ElScrollbar,
+  ElInputNumber,
+  ElSelect,
+  ElOption,
+  ElAlert
 } from 'element-plus'
 import 'element-plus/packages/theme-chalk/src/base.scss'
 
@@ -36,7 +40,11 @@ const components = [
   ElMenu,
   ElMenuItem,
   ElSubmenu,
-  ElScrollbar
+  ElScrollbar,
+  ElInputNumber,
+  ElSelect,
+  ElOption,
+  ElAlert
 ]
 
 // 插件列表
