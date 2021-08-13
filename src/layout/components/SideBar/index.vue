@@ -4,7 +4,6 @@
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
-        :collapse="isCollapse"
         mode="vertical"
         :background-color="backgroundColor"
         :text-color="textColor"
@@ -25,6 +24,7 @@
 import { defineComponent, computed, ref, reactive, toRefs } from "vue";
 import Logo from "./Logo.vue";
 import SideItem from "./SideItem.vue";
+import { constantRoutes } from "@/router/index";
 
 export default defineComponent({
   name: "SideBar",
@@ -36,42 +36,9 @@ export default defineComponent({
     const activeMenu = computed(() => {
       return "/";
     });
-    const isCollapse = ref(false);
-    const routes = ref([
-      { path: "/", title: "首页" },
-      {
-        path: "/my-workbench",
-        title: "我的工作台",
-        children: [
-          {
-            path: "option-2-1",
-            title: "选项2-1",
-          },
-          {
-            path: "option-2-2",
-            title: "选项2-2",
-            children: [
-              {
-                path: "option-2-2-1",
-                title: "选项2-2-1",
-              },
-              {
-                path: "option-2-2-2",
-                title: "选项2-2-2",
-              },
-              {
-                path: "option-2-2-3",
-                title: "选项2-2-3",
-              },
-            ],
-          },
-        ],
-      },
-      { path: "/message-center", title: "消息中心" },
-    ]);
 
     // 侧边栏背景颜色
-    const asideBgColor = ref('#9780e7')
+    const asideBgColor = ref("#9780e7");
     const menuColorConfig = reactive({
       backgroundColor: asideBgColor, // 菜单的背景色（仅支持 hex 格式）
       textColor: "#303133", //	菜单的文字颜色（仅支持 hex 格式）
@@ -79,18 +46,20 @@ export default defineComponent({
       activeBgColor: "#7966b9", // 当前激活菜单的背景色
     });
 
+    const routes = computed(() => {
+      return constantRoutes;
+    });
+
     return {
       activeMenu,
-      isCollapse,
       routes,
       ...toRefs(menuColorConfig),
-      asideBgColor
+      asideBgColor,
     };
   },
 });
 </script>
 <style lang="scss" scoped>
-
 .scrollbar-wrapper {
   overflow-x: hidden !important;
 }
@@ -98,7 +67,7 @@ export default defineComponent({
 .aside {
   height: 100vh;
   min-height: 100vh;
-  width: 200px;
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
@@ -115,12 +84,9 @@ export default defineComponent({
       // 导入js中定义的变量 参考https://github.com/vuejs/rfcs/blob/master/active-rfcs/0043-sfc-style-variables.md
       background-color: v-bind("activeBgColor") !important;
     }
-    :deep(.el-submenu
-        .el-submenu__title
-        i.el-submenu__icon-arrow.el-icon-arrow-down) {
+    :deep(.el-submenu.el-submenu__titlei.el-submenu__icon-arrow.el-icon-arrow-down) {
       color: v-bind("textColor");
     }
   }
 }
-
 </style>
