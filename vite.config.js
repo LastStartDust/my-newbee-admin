@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import styleImport from 'vite-plugin-style-import'
+import { svgBuilder } from './src/plugins/svg-builder'
 
 // https://vitejs.dev/config/
 export default ({mode}) => {
@@ -26,7 +27,8 @@ export default ({mode}) => {
             return `element-plus/lib/${name}`;
           },
         }]
-      })
+      }),
+      svgBuilder('./src/icons/svg/'),
     ],
     resolve: {
       alias: {
