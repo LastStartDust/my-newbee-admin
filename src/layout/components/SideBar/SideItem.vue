@@ -8,18 +8,17 @@
       ">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)">
-          <i :class="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" />
-          <template #title>
-            <span>{{ (onlyOneChild.meta.title) }}</span>
-          </template>
+          <MenuItem 
+            :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
+            :title="onlyOneChild.meta.title"
+          />
         </el-menu-item>
       </app-link>
     </template>
 
     <el-submenu v-else :ref="subMenuRef" :index="resolvePath(item.path)" popper-append-to-body>
       <template #title>
-        <i :class="item.meta.icon"></i>
-        <span>{{ item.meta.title }}</span>
+        <MenuItem v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
       </template>
       <side-item
         v-for="child in item.children"
@@ -36,6 +35,7 @@
 import { defineComponent, ref } from "vue";
 import path from "path-browserify";
 import AppLink from './Link.vue';
+import MenuItem from './Item.vue';
 
 export default defineComponent({
   name: "SideItem",
@@ -55,7 +55,7 @@ export default defineComponent({
       default: ""
     }
   },
-  components: { AppLink },
+  components: { AppLink, MenuItem },
   setup(props, ctx) {
 
     const subMenuRef = ref(null)
