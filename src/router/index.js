@@ -14,14 +14,14 @@ export const constantRoutes = [
         name: "Welcome",
         // 路由使用动态导入方式
         component: () => import('@/views/home/index.vue'),
-        meta: { title: "home" },
+        meta: { title: "Welcome", icon: 'el-icon-s-home' },
       },
     ],
   },
   {
     path: "/goods",
     name: "Goods",
-    meta: { title: "Goods", icon: "table" },
+    meta: { title: "Goods", icon: "el-icon-s-shop" },
     component: Layout,
     redirect: { name: "GoodsList" },
 
@@ -30,13 +30,13 @@ export const constantRoutes = [
         path: "list",
         name: "GoodsList",
         component: () => import("@/views/goods/index.vue"),
-        meta: { title: "GoodsList", icon: "list" },
+        meta: { title: "GoodsList", icon: "el-icon-s-order" },
       },
       {
         path: "add",
         name: "AddGoods",
         component: () => import("@/views/goods/add.vue"),
-        meta: { title: "AddGoods", icon: "add", noCache: true },
+        meta: { title: "AddGoods", icon: "el-icon-circle-plus-outline", noCache: true },
       }
     ]
   },
