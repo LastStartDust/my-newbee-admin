@@ -36,6 +36,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/variables.module.scss';
+
 @mixin clearfix {
   &:after {
     content: "";
@@ -44,20 +46,11 @@ export default defineComponent({
   }
 }
 
-$sideBarWidth: 200px;
 .app-wrapper {
   @include clearfix;
   position: relative;
-  width: 100vw;
-  height: 100vh;
-
-  .sidebar-container {
-    width: $sideBarWidth;
-  }
-
-  .main-container {
-    margin-left: $sideBarWidth;
-  }
+  width: 100%;
+  height: 100%;
 }
 
 </style>
