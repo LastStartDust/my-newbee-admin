@@ -25,6 +25,7 @@ import Logo from "./Logo.vue";
 import SideItem from "./SideItem.vue";
 import { constantRoutes } from "@/router/index";
 import variablesModule from '@/styles/variables.module.scss'
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "SideBar",
@@ -33,8 +34,14 @@ export default defineComponent({
     SideItem,
   },
   setup(props) {
+    const route = useRoute()
     const activeMenu = computed(() => {
-      return "/";
+      const { meta, path } = route
+      // if set path, the sidebar will highlight the path you set
+      if (meta.activeMenu) {
+        return meta.activeMenu
+      }
+      return path
     });
 
     const routes = computed(() => {
