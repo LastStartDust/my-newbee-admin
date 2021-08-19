@@ -14,23 +14,23 @@
 import { computed, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import Sidebar from './components/SideBar/index.vue';
-import AppMain from './components/AppMain/index.vue';
+import AppMain from './components/AppMain.vue';
 
 export default defineComponent({
     name: 'Layout',
     components: {
-        Sidebar,
-        AppMain
+      Sidebar,
+      AppMain
     },
     setup() {
-        const route = useRoute
-        const key = computed(() => {
-            return route.path
-        })
+      const route = useRoute
+      const key = computed(() => {
+          return route.path
+      })
 
-        return {
-            key
-        }
+      return {
+          key
+      }
     }
 })
 </script>
