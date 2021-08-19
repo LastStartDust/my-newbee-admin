@@ -1,0 +1,23 @@
+{
+  "Vue3.0快速生成代表块": {
+    "prefix": "vue3-base-block",
+    "body": [
+      "<template>",
+      "  <div></div>",
+      "</template>",
+      "<script>",
+      "import { defineComponent } from 'vue'",
+      "export default defineComponent({",
+      "  name: 'CompName',",
+      "  setup(props, { attrs, slots, emit }) {",
+      "    // const { title } = toRefs(props)",
+      "    return {};",
+      "  }",
+      "})",
+      "</script>",
+      "<style lang='scss' scoped>",
+      "</style>"
+    ],
+    "description": "Vue3.0快速生成代表块"
+  }
+}
