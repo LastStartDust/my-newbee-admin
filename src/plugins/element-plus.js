@@ -20,7 +20,13 @@ import {
   ElInputNumber,
   ElSelect,
   ElOption,
-  ElAlert
+  ElAlert,
+  ElTooltip,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 } from 'element-plus'
 import 'element-plus/packages/theme-chalk/src/base.scss'
 
@@ -44,7 +50,13 @@ const components = [
   ElInputNumber,
   ElSelect,
   ElOption,
-  ElAlert
+  ElAlert,
+  ElTooltip,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 ]
 
 // 插件列表
