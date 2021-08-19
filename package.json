@@ -8,6 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^6.0.0",
     "axios": "^0.21.1",
     "element-plus": "^1.0.2-beta.71",
     "js-cookie": "^3.0.0",

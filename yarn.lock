@@ -132,6 +132,21 @@
   resolved "https://registry.nlark.com/@vue/shared/download/@vue/shared-3.2.4.tgz#ba2a09527afff27b28d08f921b4a597e9504ca7a"
   integrity sha1-uioJUnr/8nso0I+SG0pZfpUEyno=
 
+"@vueuse/core@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.nlark.com/@vueuse/core/download/@vueuse/core-6.0.0.tgz#ebb6ad380682adc6c7d6c3be4f3e4003543845fd"
+  integrity sha1-67atOAaCrcbH1sO+Tz5AA1Q4Rf0=
+  dependencies:
+    "@vueuse/shared" "6.0.0"
+    vue-demi "*"
+
+"@vueuse/shared@6.0.0":
+  version "6.0.0"
+  resolved "https://registry.nlark.com/@vueuse/shared/download/@vueuse/shared-6.0.0.tgz#e6b8804541a1853615db3dd869d07653b244451f"
+  integrity sha1-5riARUGhhTYV2z3YadB2U7JERR8=
+  dependencies:
+    vue-demi "*"
+
 anymatch@~3.1.2:
   version "3.1.2"
   resolved "https://registry.nlark.com/anymatch/download/anymatch-3.1.2.tgz#c0557c096af32f106198f4f4e2a383537e378716"
@@ -537,6 +552,11 @@ path-parse@^1.0.6:
   resolved "https://registry.nlark.com/path-parse/download/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
   integrity sha1-+8EUtgykKzDZ2vWFjkvWi77bZzU=
 
+path-to-regexp@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.npm.taobao.org/path-to-regexp/download/path-to-regexp-6.2.0.tgz#f7b3803336104c346889adece614669230645f38"
+  integrity sha1-97OAMzYQTDRoia3s5hRmkjBkXzg=
+
 picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.2:
   version "2.3.0"
   resolved "https://registry.nlark.com/picomatch/download/picomatch-2.3.0.tgz#f1f061de8f6a4bf022892e2d128234fb98302972"
@@ -735,6 +755,11 @@ vite@^2.4.4:
     rollup "^2.38.5"
   optionalDependencies:
     fsevents "~2.3.2"
+
+vue-demi@*:
+  version "0.11.3"
+  resolved "https://registry.nlark.com/vue-demi/download/vue-demi-0.11.3.tgz#dd7495b92b495ecfa35675bf024b1358a7add150"
+  integrity sha1-3XSVuStJXs+jVnW/AksTWKet0VA=
 
 vue-router@4:
   version "4.0.11"
