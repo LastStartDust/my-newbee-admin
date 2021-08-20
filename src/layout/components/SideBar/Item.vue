@@ -3,7 +3,9 @@
     <i v-if="icon.includes('el-icon')" class="sub-el-icon" :class="icon"></i>
     <svg-icon v-else :icon-class="icon" />
   </template>
-  <span v-if="title" :class="{ 'title-margin-left': icon }">{{ title }}</span>
+  <template v-if="title">
+    <span name="title">{{ title }}</span>
+  </template>
 </template>
 
 <script>
@@ -30,7 +32,4 @@ export default {
   height: 1em;
 }
 
-.title-margin-left {
-  margin-left: 6px;
-}
 </style>

@@ -23,6 +23,7 @@ import { useRoute } from 'vue-router';
 import Sidebar from './components/SideBar/index.vue';
 import AppMain from './components/AppMain.vue';
 import NavBar from './components/NavBar.vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
     name: 'Layout',
@@ -36,38 +37,34 @@ export default defineComponent({
       const key = computed(() => {
         return route.path
       })
+      
+      const store = useStore()
+      const sidebar = computed(() => store.getters.sidebar)
 
-      // TODO
-      const sidebar = reactive({
-        opened: true,
-        withoutAnimation: ''
-      })
-
-      // TODO
       const setting = reactive({
-        device: computed(() => 'desktop'),
-        showSettings: computed(() => false),
-        needTagsView: computed(() => false),
-        fixedHeader: computed(() => false)
+        device: computed(() => store.state.app.sidebar),
+        showSettings: computed(() => store.state.settings.showSettings),
+        needTagsView: computed(() => store.state.settings.tagsView),
+        fixedHeader: computed(() => store.state.settings.fixedHeader)
       })
 
-      // TODO
-      const classObj = reactive({
-        openSidebar: sidebar.opened,
-        hideSidebar: !sidebar.opened,
-        withoutAnimation: sidebar.withoutAnimation,
-        mobile: setting.device === 'mobile'
+      const classObj = computed(() => {
+        return {
+          openSidebar: sidebar.value.opened,
+          hideSidebar: !sidebar.value.opened,
+          withoutAnimation: sidebar.value.withoutAnimation,
+          mobile: setting.device === 'mobile'
+        }
       })
 
       const handleClickOutside = () => {
-        // TODO
-        // this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+        store.dispatch('app/closeSideBar', { withoutAnimation: false })
       }
 
       return {
         key,
         ...toRefs(setting),
-        ...toRefs(sidebar),
+        sidebar,
         classObj,
         handleClickOutside
       }

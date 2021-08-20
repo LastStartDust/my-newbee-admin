@@ -48,6 +48,7 @@ import logoJpg from '@/assets/logo.jpg'
 import Breadcrumb from '@/components/Breadcrumb/index.vue';
 import Hamburger from '@/components/Hamburger/index.vue';
 import ScreenFull from '@/components/ScreenFull/index.vue';
+import { useStore } from 'vuex';
 
 // 顶部导航栏
 export default defineComponent({
@@ -57,31 +58,27 @@ export default defineComponent({
     Hamburger,
     ScreenFull
   },
-  setup(props, { attrs, slots, emit }) {
+  setup() {
+    const store = useStore()
+    const avatar = logoJpg
+    const sidebar = computed(() => store.getters.sidebar)
+    const device = computed(() => store.getters.device)
+
     const toggleSideBar = () => {
-        // TODO
-        // this.$store.dispatch('app/toggleSideBar')
-    }
-    const logout = async () => {
-        // TODO
-        //   await this.$store.dispatch('user/logout')
-        //   this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      store.dispatch('app/toggleSideBar')
     }
     // TODO
-    const sidebar = computed(() => {
-        return {
-            opened: true,
-            withoutAnimation: ''
-        }
-    })
-    const device = computed(() => 'desktop')
+    const logout = async () => {
+      // await store.dispatch('user/logout')
+      // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    }
 
     return {
-        toggleSideBar,
-        logout,
-        sidebar,
-        avatar: logoJpg,
-        device
+      toggleSideBar,
+      logout,
+      sidebar,
+      avatar,
+      device
     }
   },
 });

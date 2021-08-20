@@ -1,9 +1,10 @@
 <template>
   <div :class="{'has-logo':showLogo}">
-    <Logo></Logo>
+    <Logo v-if="showLogo" :collapse="isCollapse"></Logo>
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
+        :collapse="isCollapse"
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
         :active-text-color="variables.menuActiveText"
@@ -26,6 +27,7 @@ import SideItem from "./SideItem.vue";
 import { constantRoutes } from "@/router/index";
 import variablesModule from '@/styles/variables.module.scss'
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "SideBar",
@@ -35,6 +37,7 @@ export default defineComponent({
   },
   setup(props) {
     const route = useRoute()
+    const store = useStore()
     const activeMenu = computed(() => {
       const { meta, path } = route
       // if set path, the sidebar will highlight the path you set
@@ -42,20 +45,26 @@ export default defineComponent({
         return meta.activeMenu
       }
       return path
-    });
+    })
 
+    const sidebar = computed(() => store.getters.sidebar)
+    const permission_routes = computed(() => store.getters.permission_routes)
     const routes = computed(() => {
-      return constantRoutes;
-    });
-
+      if(permission_routes.value && permission_routes.value.length > 0) {
+        return permission_routes
+      }
+      return constantRoutes
+    })
+    const showLogo = computed(() => store.state.settings.sidebarLogo)
     const variables = computed(() => variablesModule)
-    const showLogo = computed(() => true)
+    const isCollapse = computed(() => !sidebar.value.opened)
 
     return {
       activeMenu,
       routes,
       variables,
-      showLogo
+      showLogo,
+      isCollapse
     };
   },
 });
