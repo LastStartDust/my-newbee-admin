@@ -100,6 +100,9 @@ export const constantRoutes = [
   }
 ];
 
+// 异步路由
+export const asyncRoutes = []
+
 // 创建路由
 const router = createRouter({
   // hash模式
