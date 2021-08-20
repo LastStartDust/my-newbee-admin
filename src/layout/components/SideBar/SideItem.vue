@@ -8,17 +8,20 @@
       ">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)">
-          <MenuItem 
-            :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
-            :title="onlyOneChild.meta.title"
-          />
+          <MenuItemIcon :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" />
+          <template #title>
+            <MenuItemTitle :title="onlyOneChild.meta.title" />
+          </template>
         </el-menu-item>
       </app-link>
     </template>
 
     <el-submenu v-else :ref="subMenuRef" :index="resolvePath(item.path)" popper-append-to-body>
       <template #title>
-        <MenuItem v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" />
+        <template v-if="item.meta">
+          <MenuItemIcon :icon="item.meta.icon" />
+          <MenuItemTitle :title="item.meta.title" />
+        </template>
       </template>
       <side-item
         v-for="child in item.children"
@@ -35,7 +38,8 @@
 import { defineComponent, ref } from "vue";
 import path from "path-browserify";
 import AppLink from './Link.vue';
-import MenuItem from './Item.vue';
+import MenuItemIcon from './MenuItemIcon.vue'
+import MenuItemTitle from './MenuItemTitle.vue'
 
 export default defineComponent({
   name: "SideItem",
@@ -55,7 +59,11 @@ export default defineComponent({
       default: ""
     }
   },
-  components: { AppLink, MenuItem },
+  components: { 
+    AppLink,
+    MenuItemIcon,
+    MenuItemTitle
+  },
   setup(props, ctx) {
 
     const subMenuRef = ref(null)
