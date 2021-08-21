@@ -9,7 +9,7 @@
         <!-- 顶部导航栏 -->
         <NavBar />
         <!-- tabs标签页 -->
-        <!-- <tags-view v-if="needTagsView" /> -->
+        <tag-view v-if="needTagsView" />
       </div>
       <!-- 主体内容 -->
       <app-main />
@@ -23,6 +23,7 @@ import { useRoute } from 'vue-router';
 import Sidebar from './components/SideBar/index.vue';
 import AppMain from './components/AppMain.vue';
 import NavBar from './components/NavBar.vue';
+import TagView from './components/TagView/index.vue';
 import { useStore } from 'vuex';
 
 export default defineComponent({
@@ -30,7 +31,8 @@ export default defineComponent({
     components: {
       Sidebar,
       AppMain,
-      NavBar
+      NavBar,
+      TagView
     },
     setup() {
       const route = useRoute
