@@ -4,6 +4,17 @@ import Layout from "@/layout/index.vue";
 // 定义路由
 export const constantRoutes = [
   {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index.vue'),
+      }
+    ]
+  },
+  {
     path: "/",
     name: 'Home',
     component: Layout,
