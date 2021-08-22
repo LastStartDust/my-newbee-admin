@@ -29,10 +29,10 @@
       :style="{ left: left + 'px', top: top + 'px' }"
       class="contextmenu"
     >
-      <li @click="refreshSelectedTag(selectedTag)">Refresh</li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">Close</li>
-      <li @click="closeOthersTags">Close Others</li>
-      <li @click="closeAllTags(selectedTag)">Close All</li>
+      <li @click="refreshSelectedTag(selectedTag)">刷新</li>
+      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭</li>
+      <li @click="closeOthersTags">关闭其它</li>
+      <li @click="closeAllTags(selectedTag)">关闭所有</li>
     </ul>
   </div>
 </template>
@@ -86,7 +86,7 @@ export default defineComponent({
       const tags = tagRefs.value
       nextTick(() => {
         for (const tag of tags) {
-          if (tag.to.path === route.path) {
+          if (tag?.to?.path === route.path) {
             scrollPaneRef.value.moveToTarget(tag)
             // when query is different then update
             if (tag.to.fullPath !== route.fullPath) {
@@ -212,13 +212,9 @@ export default defineComponent({
       const offsetLeft = elRef.value.getBoundingClientRect().left // container margin left
       const offsetWidth = elRef.value.offsetWidth // container width
       const maxLeft = offsetWidth - menuMinWidth // left boundary
-      const left = e.clientX - offsetLeft + 15 // 15: margin right
+      const left2 = e.clientX - offsetLeft + 15 // 15: margin right
 
-      if (left > maxLeft) {
-        left.value = maxLeft
-      } else {
-        left.value = left
-      }
+      left.value = Math.min(left2, maxLeft)
 
       top.value = e.clientY
       visible.value = true
