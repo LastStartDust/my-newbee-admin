@@ -14,7 +14,7 @@ export const constantRoutes = [
         name: "Welcome",
         // 路由使用动态导入方式
         component: () => import('@/views/home/index.vue'),
-        meta: { title: "Welcome", icon: 'el-icon-s-home' },
+        meta: { title: "Welcome", icon: 'el-icon-s-home', affix: true },
       },
     ],
   },
@@ -93,6 +93,7 @@ export const constantRoutes = [
       },
       {
         path: 'menu2',
+        name: 'Menu-2',
         component: () => import('@/views/nested/menu2/index.vue'),
         meta: { title: 'menu2' }
       }
