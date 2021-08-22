@@ -4,7 +4,18 @@
   </el-scrollbar>
 </template>
 <script>
-import { defineComponent, ref, computed, onMounted, onUnmounted } from 'vue'
+const tagAndTagSpacing = 4 // tagAndTagSpacing
+
+import { 
+  defineComponent, 
+  ref, 
+  computed, 
+  onMounted,
+  onUnmounted,
+  getCurrentInstance,
+  inject
+} from 'vue'
+
 export default defineComponent({
   name: 'ScrollPane',
   emits: ['scroll'],
@@ -22,11 +33,13 @@ export default defineComponent({
       const $scrollWrapper = scrollWrapper.value
       $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft + eventDelta / 4
     }
+    
+    const tagRefs = inject('tagRefs')
     const moveToTarget = (currentTag) => {
       const $container = scrollContainerRef.value.$el
       const $containerWidth = $container.offsetWidth
       const $scrollWrapper = scrollWrapper.value
-      const tagList = this.$parent.$refs.tag
+      const tagList = tagRefs.value
 
       let firstTag = null
       let lastTag = null

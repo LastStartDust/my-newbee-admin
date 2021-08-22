@@ -37,7 +37,16 @@
   </div>
 </template>
 <script>
-import { computed, defineComponent, nextTick, onMounted, ref, watch } from 'vue'
+import { 
+  computed, 
+  defineComponent, 
+  nextTick, 
+  onMounted, 
+  provide, 
+  readonly, 
+  ref,
+  watch
+} from 'vue'
 import ScrollPane from './ScrollPane.vue'
 import path from 'path-browserify'
 import { useStore } from 'vuex'
@@ -71,9 +80,10 @@ export default defineComponent({
       return false
     }
     const tagRefs = ref([])
+    // 提供给子组件使用
+    provide('tagRefs', readonly(tagRefs))
     const moveToCurrentTag = () => {
-      const tags = tagRefs
-      console.log(tags)
+      const tags = tagRefs.value
       nextTick(() => {
         for (const tag of tags) {
           if (tag.to.path === route.path) {
