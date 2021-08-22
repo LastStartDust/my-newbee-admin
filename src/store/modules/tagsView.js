@@ -29,7 +29,9 @@ const mutations = {
   },
   DEL_CACHED_VIEW: (state, view) => {
     const index = state.cachedViews.indexOf(view.name)
-    index > -1 && state.cachedViews.splice(index, 1)
+    if(index > -1) {
+      state.cachedViews.splice(index, 1)
+    }
   },
 
   DEL_OTHERS_VISITED_VIEWS: (state, view) => {
