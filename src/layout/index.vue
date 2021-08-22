@@ -25,6 +25,7 @@ import AppMain from './components/AppMain.vue';
 import NavBar from './components/NavBar.vue';
 import TagView from './components/TagView/index.vue';
 import { useStore } from 'vuex';
+import { useResizeHandlerHook } from './hook/ResizeHandlerHook';
 
 export default defineComponent({
     name: 'Layout',
@@ -62,6 +63,8 @@ export default defineComponent({
       const handleClickOutside = () => {
         store.dispatch('app/closeSideBar', { withoutAnimation: false })
       }
+
+      useResizeHandlerHook(setting.device, sidebar)
 
       return {
         key,
