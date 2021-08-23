@@ -45,7 +45,7 @@ export default defineComponent({
       const sidebar = computed(() => store.getters.sidebar)
 
       const setting = reactive({
-        device: computed(() => store.state.app.sidebar),
+        device: computed(() => store.state.app.device),
         showSettings: computed(() => store.state.settings.showSettings),
         needTagsView: computed(() => store.state.settings.tagsView),
         fixedHeader: computed(() => store.state.settings.fixedHeader)
@@ -64,7 +64,7 @@ export default defineComponent({
         store.dispatch('app/closeSideBar', { withoutAnimation: false })
       }
 
-      useResizeHandlerHook(setting.device, sidebar)
+      useResizeHandlerHook()
 
       return {
         key,
