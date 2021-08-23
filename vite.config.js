@@ -3,6 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import styleImport from 'vite-plugin-style-import'
 import { svgBuilder } from './src/plugins/svg-builder'
+import { viteMockServe } from 'vite-plugin-mock'
+import settings from './src/settings'
 
 // https://vitejs.dev/config/
 export default ({mode}) => {
@@ -29,6 +31,20 @@ export default ({mode}) => {
         }]
       }),
       svgBuilder('./src/icons/svg/'),
+      viteMockServe({
+        mockPath: 'mock/api',
+        // close support .ts file
+        supportTs: false,
+        // default
+        // 是否启用本地mock
+        localEnabled: settings.isUseMock,
+        // 生产环境是否启用mock
+        prodEnabled: settings.isUseMock,
+        injectCode: `
+          import { setupProdMockServer } from './mockProdServer';
+          setupProdMockServer();
+        `
+      })
     ],
     resolve: {
       alias: {
@@ -42,7 +58,11 @@ export default ({mode}) => {
       proxy: {
         [`${VITE_APP_BASE_API}`]: {
           // 凡是遇到 /dev-api 路径的请求，都映射到 target 属性
-          target: VITE_APP_DEV_PROXY_TARGET,
+          // target: VITE_APP_DEV_PROXY_TARGET,
+          target: 
+            settings.isUseMock
+              ? `http://localhost:3000` // 开发目标服务器
+              : VITE_APP_DEV_PROXY_TARGET,
           changeOrigin: true,
           // 重写 /dev-api 为空, new RegExp(`^${prefix}`)
           rewrite: path => path.replace(new RegExp(`^${VITE_APP_BASE_API}`), '')
