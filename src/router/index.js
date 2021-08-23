@@ -121,11 +121,19 @@ export const constantRoutes = [
 // 异步路由
 export const asyncRoutes = []
 
-// 创建路由
-const router = createRouter({
-  // hash模式
+const createRouterIns = () => createRouter({
   history: createWebHashHistory(),
-  routes: constantRoutes,
-});
+  scrollBehavior: () => ({ top: 0 }),
+  routes: constantRoutes
+})
+
+// 创建路由
+const router = createRouterIns()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouterIns()
+  router.matcher = newRouter.matcher // reset router
+}
 
 export default router;
