@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth';
 import { ElMessage } from 'element-plus';
 
 // 业务成功码
-const SUCCESS_CODE = 20000;
+const SUCCESS_CODE = 0;
 
 // 设置请求默认请求头
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -44,7 +44,7 @@ service.interceptors.response.use(
       return Promise.reject(response);
     }
 
-    // 自定义状态码不是20000，认为请求异常
+    // 自定义状态码不是指定的，认为请求异常
     if (response.data.code !== SUCCESS_CODE) {
       ElMessage.error(response.data.message || "Error");
       // 50008: 不合法的token; 50012: 其它地方登录; 50014: token过期;
