@@ -4,12 +4,14 @@ import app from './modules/app'
 import permission from './modules/permission'
 import settings from './modules/settings'
 import tagsView from './modules/tagsView'
+import user from './modules/user'
 
 const modules = {
   app,
   permission,
   settings,
-  tagsView
+  tagsView,
+  user
 }
 
 const store = createStore({
