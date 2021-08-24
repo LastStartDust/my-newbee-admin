@@ -8,9 +8,12 @@ import store from '@/store';
 // 目前版本不支持主题色修改，待element-plus迁移scss到css完成
 // import '@/styles/element-variables.module.scss'
 import '@/permission'
+// import { usePermissionDirective } from '@/directive/permission/index'
+import permission from '@/directive/permission/index'
 
 // 创建应用实例
 const app = createApp(App)
+app.use(permission)
 app.use(useElementPlus)
 app.use(router)
 app.use(store)
