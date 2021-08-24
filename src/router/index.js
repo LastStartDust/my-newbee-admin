@@ -15,6 +15,12 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/404',
+    name: '404',
+    component: () => import('@/views/error-page/404.vue'),
+    hidden: true
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/index.vue'),
@@ -119,7 +125,33 @@ export const constantRoutes = [
 ];
 
 // 异步路由
-export const asyncRoutes = []
+export const asyncRoutes = [
+  {
+  {
+    path: "/goods",
+    name: "Goods",
+    meta: { title: "Goods", icon: "el-icon-s-shop" },
+    component: Layout,
+    redirect: { name: "GoodsList" },
+
+    children: [
+      {
+        path: "list",
+        name: "GoodsList",
+        component: () => import("@/views/goods/index.vue"),
+        meta: { title: "GoodsList", icon: "el-icon-s-order" },
+      },
+      {
+        path: "add",
+        name: "AddGoods",
+        component: () => import("@/views/goods/add.vue"),
+        meta: { title: "AddGoods", icon: "el-icon-circle-plus-outline", noCache: true },
+      }
+    ]
+  },
+  // 404 page must be placed at the end !!!
+  { path: '/:pathMatch(.*)', redirect: { name: '404' }, hidden: true }
+]
 
 const createRouterIns = () => createRouter({
   history: createWebHashHistory(),
