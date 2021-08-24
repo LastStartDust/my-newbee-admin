@@ -29,12 +29,16 @@
         <template #dropdown>
           <el-dropdown-menu>
             <router-link to="/">
-              <el-dropdown-item>Welcome</el-dropdown-item>
+              <el-dropdown-item>
+                <i class="el-icon-s-home"></i>
+                <span>Welcome</span>
+              </el-dropdown-item>
             </router-link>
 
             <!-- 退出登陆 -->
             <el-dropdown-item divided @click="logout">
-              <span style="display: block">Log Out</span>
+              <i class="el-icon-switch-button"></i>
+              <span>退出系统</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -49,6 +53,7 @@ import Breadcrumb from '@/components/Breadcrumb/index.vue';
 import Hamburger from '@/components/Hamburger/index.vue';
 import ScreenFull from '@/components/ScreenFull/index.vue';
 import { useStore } from 'vuex';
+import { useRouter } from "vue-router";
 
 // 顶部导航栏
 export default defineComponent({
@@ -60,6 +65,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
     const avatar = logoJpg
     const sidebar = computed(() => store.getters.sidebar)
     const device = computed(() => store.getters.device)
@@ -67,10 +73,9 @@ export default defineComponent({
     const toggleSideBar = () => {
       store.dispatch('app/toggleSideBar')
     }
-    // TODO
     const logout = async () => {
-      // await store.dispatch('user/logout')
-      // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      await store.dispatch('user/logout')
+      router.push('/login')
     }
 
     return {
