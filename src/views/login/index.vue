@@ -40,6 +40,7 @@ import { defineComponent, reactive, ref, watch } from 'vue'
 import { validUsername } from '@/utils/validate'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { ElMessage } from 'element-plus'
 
 export default defineComponent({
   name: 'Login',
@@ -84,7 +85,8 @@ export default defineComponent({
           store
             .dispatch('user/login', postForm)
             .then(() => {
-              router.push({ path: this.redirect || '/' })
+              ElMessage.success('登录成功')
+              router.push({ path: redirect.value || '/' })
             })
             .finally(() => {
               loading.value = false
