@@ -1,17 +1,17 @@
 import { computed, onBeforeMount, onBeforeUnmount, onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import { useStore } from 'vuex';
+import router from '@/router'
+import store from '@/store'
 
 const { body } = document
 const WIDTH = 992 // refer to Bootstrap's responsive design
 
 export function useResizeHandlerHook() {
-  const store = useStore()
-  const route = useRoute()
+  // 获取当前路由地址
+  const { currentRoute } = router
   const device = computed(() => store.state.app.device)
-  const sidebar = computed(() => store.state.app.sidebar) 
+  const sidebar = computed(() => store.state.app.sidebar)
 
-  watch(route.path, () => {
+  watch(currentRoute, () => {
     if (device.value === 'mobile' && sidebar.value.opened) {
       store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
