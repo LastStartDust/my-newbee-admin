@@ -26,7 +26,11 @@ import {
   ElDropdownItem,
   ElDropdownMenu,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElRadioButton,
+  ElRadioGroup,
+  ElTabPane,
+  ElTabs
 } from 'element-plus'
 import 'element-plus/packages/theme-chalk/src/base.scss'
 
@@ -56,7 +60,11 @@ const components = [
   ElDropdownItem,
   ElDropdownMenu,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElRadioButton,
+  ElRadioGroup,
+  ElTabPane,
+  ElTabs
 ]
 
 // 插件列表

@@ -42,28 +42,6 @@ export const constantRoutes = [
     ],
   },
   {
-    path: "/goods",
-    name: "Goods",
-    meta: { title: "Goods", icon: "el-icon-s-shop" },
-    component: Layout,
-    redirect: { name: "GoodsList" },
-
-    children: [
-      {
-        path: "list",
-        name: "GoodsList",
-        component: () => import("@/views/goods/index.vue"),
-        meta: { title: "GoodsList", icon: "el-icon-s-order" },
-      },
-      {
-        path: "add",
-        name: "AddGoods",
-        component: () => import("@/views/goods/add.vue"),
-        meta: { title: "AddGoods", icon: "el-icon-circle-plus-outline", noCache: true },
-      }
-    ]
-  },
-  {
     path: '/nested',
     component: Layout,
     name: 'Nested',
@@ -127,6 +105,46 @@ export const constantRoutes = [
 // 异步路由
 export const asyncRoutes = [
   {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'Permission',
+    meta: {
+      title: 'Permission',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'page',
+        component: () => import('@/views/permission/page.vue'),
+        name: 'PagePermission',
+        meta: {
+          title: 'Page Permission',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'directive',
+        component: () => import('@/views/permission/directive.vue'),
+        name: 'DirectivePermission',
+        meta: {
+          title: 'Directive Permission'
+          // if do not set roles, means: this page does not require permission
+        }
+      },
+      // {
+      //   path: 'role',
+      //   component: () => import('@/views/permission/role.vue'),
+      //   name: 'RolePermission',
+      //   meta: {
+      //     title: 'Role Permission',
+      //     roles: ['admin']
+      //   }
+      // }
+    ]
+  },
   {
     path: "/goods",
     name: "Goods",
