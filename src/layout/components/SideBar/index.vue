@@ -24,7 +24,6 @@
 import { defineComponent, computed } from 'vue'
 import Logo from './Logo.vue'
 import SideItem from './SideItem.vue'
-import { constantRoutes } from '@/router/index'
 import variablesModule from '@/styles/variables.module.scss'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
@@ -49,19 +48,13 @@ export default defineComponent({
 
     const sidebar = computed(() => store.getters.sidebar)
     const permission_routes = computed(() => store.getters.permission_routes)
-    const routes = computed(() => {
-      if (permission_routes.value && permission_routes.value.length > 0) {
-        return permission_routes
-      }
-      return constantRoutes
-    })
     const showLogo = computed(() => store.state.settings.sidebarLogo)
     const variables = computed(() => variablesModule)
     const isCollapse = computed(() => !sidebar.value.opened)
 
     return {
       activeMenu,
-      routes,
+      routes: permission_routes,
       variables,
       showLogo,
       isCollapse,
