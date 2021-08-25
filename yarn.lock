@@ -615,6 +615,11 @@ js-cookie@^3.0.0:
   resolved "https://registry.nlark.com/js-cookie/download/js-cookie-3.0.0.tgz?cache=0&sync_timestamp=1627319346334&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fjs-cookie%2Fdownload%2Fjs-cookie-3.0.0.tgz#db1661d5459920ec95aaf186ccf74ceb4a495164"
   integrity sha1-2xZh1UWZIOyVqvGGzPdM60pJUWQ=
 
+js-md5@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/js-md5/-/js-md5-0.7.3.tgz#b4f2fbb0b327455f598d6727e38ec272cd09c3f2"
+  integrity sha512-ZC41vPSTLKGwIRjqDh8DfXoCrdQIyBgspJVPXHBGu4nZlAEvG3nf+jO9avM9RmLiGakg7vz974ms99nEV0tmTQ==
+
 json5@^1.0.1:
   version "1.0.1"
   resolved "https://registry.nlark.com/json5/download/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"

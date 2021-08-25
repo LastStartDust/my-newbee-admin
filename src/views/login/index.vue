@@ -41,6 +41,7 @@ import { validUsername } from '@/utils/validate'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { ElMessage } from 'element-plus'
+import md5 from 'js-md5'
 
 export default defineComponent({
   name: 'Login',
@@ -66,10 +67,12 @@ export default defineComponent({
     }
     const postFormRules = reactive({
       username: [
-        { required: true, trigger: 'blur', validator: validateUsername },
+        { required: true, message: '账户不能为空', trigger: 'blur'},
+        { required: true, trigger: 'blur', validator: validateUsername }
       ],
       password: [
-        { required: true, trigger: 'blur', validator: validatePassword },
+        { required: 'true', message: '密码不能为空', trigger: 'blur' },
+        { required: true, validator: validatePassword, trigger: 'blur' }
       ],
     })
     const postFormRef = ref(null)
@@ -82,8 +85,12 @@ export default defineComponent({
       postFormRef.value.validate((valid) => {
         if (valid) {
           loading.value = true
+          const { username, password } = postForm
           store
-            .dispatch('user/login', postForm)
+            .dispatch('user/login', {
+              userName: username,
+              passwordMd5: md5(password)
+            })
             .then(() => {
               ElMessage.success('登录成功')
               router.push({ path: redirect.value || '/' })

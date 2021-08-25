@@ -2,12 +2,15 @@ import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
+const backupAvatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+
 const state = {
   token: getToken(),
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  userInfo: ''
 }
 
 const mutations = {
@@ -25,18 +28,20 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
-  }
+  },
+  SET_USER_INFO: (state, userInfo) => {
+    state.userInfo = userInfo
+  },
 }
 
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+      login(userInfo).then(response => {
+        const token = response.data
+        commit('SET_TOKEN', token)
+        setToken(token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -53,17 +58,29 @@ const actions = {
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-
-        const { roles, name, avatar, introduction } = data
+        
+        // data: {
+        //   adminUserId: 1
+        //   locked: 0
+        //   loginPassword: "******"
+        //   loginUserName: "admin"
+        //   nickName: "十三"
+        // }
+        let roles = data?.roles || []
+        if(!data.roles || !Array.isArray(roles) || roles.length <= 0) {
+          roles = ['admin']
+          data.roles = roles
+        }
 
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
         commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
+        commit('SET_NAME', data.loginUserName)
+        commit('SET_AVATAR', data.avatar || backupAvatar)
+        commit('SET_INTRODUCTION', `I am ${data.nickName}`)
+        commit('SET_USER_INFO', data)
         resolve(data)
       }).catch(error => {
         reject(error)
