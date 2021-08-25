@@ -11,7 +11,7 @@ export default ({mode}) => {
   // 导入环境配置，获取环境变量值
   // import.meta.env.VITE_NAME 相当于这里的: env.VITE_NAME
   const env = { ...loadEnv(mode, process.cwd()) }
-  const { VITE_APP_BASE_API, VITE_APP_DEV_PROXY_TARGET } = env
+  const { VITE_APP_BASE_API, VITE_APP_DEV_PROXY_TARGET, VITE_DEV_PORT } = env
 
   return defineConfig({
     plugins: [
@@ -55,13 +55,14 @@ export default ({mode}) => {
       }
     },
     server: {
+      port: VITE_DEV_PORT,
       proxy: {
         [`${VITE_APP_BASE_API}`]: {
           // 凡是遇到 /dev-api 路径的请求，都映射到 target 属性
           // target: VITE_APP_DEV_PROXY_TARGET,
           target: 
             settings.isUseMock
-              ? `http://localhost:3000` // 开发目标服务器
+              ? `http://localhost:${VITE_DEV_PORT}` // 开发目标服务器
               : VITE_APP_DEV_PROXY_TARGET,
           changeOrigin: true,
           // 重写 /dev-api 为空, new RegExp(`^${prefix}`)
