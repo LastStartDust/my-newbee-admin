@@ -2,10 +2,11 @@ import axios from "axios";
 import router from "@/router/index";
 import { env } from "@/utils/index";
 import { getToken } from '@/utils/auth';
-import { ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus'
 
+const isDev = env.MODE !== 'production'
 // 业务成功码
-const SUCCESS_CODE = 0;
+const SUCCESS_CODE = 200
 
 // 设置请求默认请求头
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -23,7 +24,7 @@ service.interceptors.request.use(
     // 请求中携带token, headers['X-Token']是一个自定义请求头，需要根据实际业务情况进行替换
     const token = getToken();
     if (token) {
-      config.headers["X-Token"] = token;
+      config.headers["token"] = token
     }
     return config;
   },
@@ -39,17 +40,19 @@ service.interceptors.response.use(
    * 也可以通过HTTP状态码判断
    */
   (response) => {
+    isDev && console.log('request ok', response)
     if (typeof response.data !== "object") {
       ElMessage.error("服务端异常！");
       return Promise.reject(response);
     }
-
+    // 自定义业务码
+    const code = response.data.resultCode
     // 自定义状态码不是指定的，认为请求异常
-    if (response.data.code !== SUCCESS_CODE) {
-      ElMessage.error(response.data.message || "Error");
+    if (code !== SUCCESS_CODE) {
+      ElMessage.error(response.data.message || "Error")
       // 50008: 不合法的token; 50012: 其它地方登录; 50014: token过期;
-      const tokenErrCodes = [50008, 50012, 50014];
-      if (tokenErrCodes.includes(response.data.code)) {
+      const tokenErrCodes = [401]
+      if (tokenErrCodes.includes(code)) {
         // 重新登录
         router.push({ name: "Login" });
       }
@@ -59,6 +62,7 @@ service.interceptors.response.use(
     }
   },
   (error) => {
+    isDev && console.log('request other error', error)
     if (error.response) {
       // 请求已发出，服务器返回的 http 状态码不是 2xx，例如：400，500，对应上面的 1
       if (error.response.status === 401) {
