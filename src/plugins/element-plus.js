@@ -30,7 +30,8 @@ import {
   ElRadioButton,
   ElRadioGroup,
   ElTabPane,
-  ElTabs
+  ElTabs,
+  ElCard
 } from 'element-plus'
 import 'element-plus/packages/theme-chalk/src/base.scss'
 
@@ -64,7 +65,8 @@ const components = [
   ElRadioButton,
   ElRadioGroup,
   ElTabPane,
-  ElTabs
+  ElTabs,
+  ElCard
 ]
 
 // 插件列表
