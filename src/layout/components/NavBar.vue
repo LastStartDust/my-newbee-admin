@@ -28,12 +28,12 @@
         </div>
         <template #dropdown>
           <el-dropdown-menu>
-            <router-link to="/">
-              <el-dropdown-item>
-                <i class="el-icon-s-home"></i>
-                <span>Welcome</span>
-              </el-dropdown-item>
-            </router-link>
+            <el-dropdown-item >
+              <span>登录名：{{ userInfo.loginUserName }}</span>
+            </el-dropdown-item>
+            <el-dropdown-item >
+              <span>昵称：{{ userInfo.nickName }}</span>
+            </el-dropdown-item>
 
             <!-- 退出登陆 -->
             <el-dropdown-item divided @click="logout">
@@ -48,7 +48,6 @@
 </template>
 <script>
 import { defineComponent, computed } from "vue";
-import logoJpg from '@/assets/logo.jpg'
 import Breadcrumb from '@/components/Breadcrumb/index.vue';
 import Hamburger from '@/components/Hamburger/index.vue';
 import ScreenFull from '@/components/ScreenFull/index.vue';
@@ -66,7 +65,8 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const router = useRouter()
-    const avatar = logoJpg
+    const avatar = computed(() => store.getters.avatar)
+    const userInfo = computed(() => store.state.user.userInfo)
     const sidebar = computed(() => store.getters.sidebar)
     const device = computed(() => store.getters.device)
 
@@ -83,7 +83,8 @@ export default defineComponent({
       logout,
       sidebar,
       avatar,
-      device
+      device,
+      userInfo
     }
   },
 });
@@ -122,6 +123,7 @@ export default defineComponent({
     float: right;
     height: 100%;
     line-height: 50px;
+    padding-right: 20px;
 
     &:focus {
       outline: none;
@@ -156,7 +158,8 @@ export default defineComponent({
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          transform: scale(0.9);
+          border-radius: 50%;
         }
 
         .el-icon-caret-bottom {
