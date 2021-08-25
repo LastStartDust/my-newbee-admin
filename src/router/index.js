@@ -167,6 +167,23 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: "/home-page-config",
+    name: "HomePageConfig",
+    meta: { title: "首页配置", icon: "el-icon-set-up" },
+    component: Layout,
+    redirect: { name: "SwiperList" },
+    alwaysShow: true,
+
+    children: [
+      {
+        path: "swiper-list",
+        name: "SwiperList",
+        component: () => import("@/views/home-page-config/swiper/list.vue"),
+        meta: { title: "轮播图配置", icon: "swiper" },
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '/:pathMatch(.*)', redirect: { name: '404' }, hidden: true }
 ]
