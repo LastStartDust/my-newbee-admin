@@ -10,6 +10,7 @@ import store from '@/store';
 import '@/permission'
 // import { usePermissionDirective } from '@/directive/permission/index'
 import permission from '@/directive/permission/index'
+import Pagination from '@/components/Pagination/index.vue';
 
 // 创建应用实例
 const app = createApp(App)
@@ -18,6 +19,7 @@ app.use(useElementPlus)
 app.use(router)
 app.use(store)
 app.component('svg-icon', svgIcon)
+app.component('pagination', Pagination)
 
 // 挂载
 app.mount('#app')
