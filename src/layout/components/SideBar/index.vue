@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, provide } from 'vue'
 import Logo from './Logo.vue'
 import SideItem from './SideItem.vue'
 import variablesModule from '@/styles/variables.module.scss'
@@ -51,6 +51,7 @@ export default defineComponent({
     const showLogo = computed(() => store.state.settings.sidebarLogo)
     const variables = computed(() => variablesModule)
     const isCollapse = computed(() => !sidebar.value.opened)
+    provide('isCollapse', isCollapse)
 
     return {
       activeMenu,
