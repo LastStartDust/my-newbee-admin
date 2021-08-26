@@ -29,3 +29,13 @@ export function fetchCarousel(id) {
     method: 'get'
   })
 }
+
+export function deleteCarousel(ids) {
+  return request({
+    url: `/carousels`,
+    data: {
+      ids,
+    },
+    method: 'delete'
+  })
+}

@@ -2,9 +2,10 @@
   <div class="app-container">
     <el-row>
       <el-button type="primary" @click="handleAdd">添加轮播图</el-button>
+      <el-button type="danger" @click="handlebatchRemove" :disabled="multipleSelection.length <= 0">批量删除</el-button>
     </el-row>
 
-    <el-table :data="list" v-loading="listLoading" border style="width: 100%">
+    <el-table :data="list" v-loading="listLoading" border style="width: 100%" @selection-change="multipleSelection = $event">
       <el-table-column type="selection" width="55" />
       <el-table-column align="center" prop="carouselId" label="id" width="55" />
       <el-table-column align="center" prop="carouselUrl" label="轮播图">
@@ -50,8 +51,9 @@
 <script>
 import { toRefs } from '@vueuse/shared'
 import { defineComponent, onMounted, reactive, ref } from 'vue'
-import { fetchCarouselList } from '@/api/home-page-config'
+import { deleteCarousel, fetchCarouselList } from '@/api/home-page-config'
 import AddSwiperDialog from './components/AddSwiperDialog.vue';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default defineComponent({
   name: 'SwiperList',
@@ -98,8 +100,45 @@ export default defineComponent({
       swiperDialogRef.value?.open()
     }
     const handleRemove = (row) => {
-      // TODO
+      ElMessageBox.confirm('此操作将删除该轮播图, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+        .then(() => {
+          deleteCarousel([row.carouselId])
+          .then(() => {
+            ElMessage.success('删除成功')
+          })
+        })
+        .catch(() => {
+          ElMessage.info('已取消删除')
+        });
     }
+
+    const multipleSelection = ref([])
+    const handlebatchRemove = () => {
+      if(!multipleSelection.value.length) {
+        ElMessage.warning('请先选择需要移除的轮播图！')
+        return false
+      }
+      const ids = multipleSelection.value.map(item => item.carouselId)
+      ElMessageBox.confirm('此操作将删除所选的轮播图, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+        .then(() => {
+          deleteCarousel(ids)
+          .then(() => {
+            ElMessage.success('删除成功')
+          })
+        })
+        .catch(() => {
+          ElMessage.info('已取消删除')
+        });
+    }
+
     const handleReload = ({ isReload }) => {
       carouselId.value = ''
       isEdit.value = false
@@ -118,7 +157,9 @@ export default defineComponent({
       carouselId,
       handleRemove,
       isEdit,
-      handleReload
+      handleReload,
+      handlebatchRemove,
+      multipleSelection
     }
   },
 })
