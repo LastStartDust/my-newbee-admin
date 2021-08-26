@@ -8,7 +8,7 @@
   }
 
   .sidebar-container {
-    transition: width 0.28s;
+    transition: width 0.3s;
     width: $sideBarWidth !important;
     background-color: $menuBg;
     height: 100%;
@@ -22,7 +22,10 @@
 
     // reset element-ui css
     .horizontal-collapse-transition {
-      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+      transition:
+        0s width ease-in-out,
+        0s padding-left ease-in-out,
+        0s padding-right ease-in-out;
     }
 
     .scrollbar-wrapper {
@@ -93,11 +96,11 @@
 
   .hideSidebar {
     .sidebar-container {
-      width: 54px !important;
+      width: $collapseSideBarWidth !important;
     }
 
     .main-container {
-      margin-left: 54px;
+      margin-left: $collapseSideBarWidth;
     }
 
     .submenu-title-noDropdown {
