@@ -22,8 +22,8 @@
 
 "@element-plus/icons@^0.0.11":
   version "0.0.11"
-  resolved "https://registry.nlark.com/@element-plus/icons/download/@element-plus/icons-0.0.11.tgz#9b187c002774548b911850d17fa5fc2f9a515f57"
-  integrity sha1-mxh8ACd0VIuRGFDRf6X8L5pRX1c=
+  resolved "https://registry.yarnpkg.com/@element-plus/icons/-/icons-0.0.11.tgz#9b187c002774548b911850d17fa5fc2f9a515f57"
+  integrity sha512-iKQXSxXu131Ai+I9Ymtcof9WId7kaXvB1+WRfAfpQCW7UiAMYgdNDqb/u0hgTo2Yq3MwC4MWJnNuTBEpG8r7+A==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -48,8 +48,8 @@
 
 "@popperjs/core@^2.4.4":
   version "2.9.3"
-  resolved "https://registry.nlark.com/@popperjs/core/download/@popperjs/core-2.9.3.tgz?cache=0&sync_timestamp=1628004507787&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40popperjs%2Fcore%2Fdownload%2F%40popperjs%2Fcore-2.9.3.tgz#8b68da1ebd7fc603999cf6ebee34a4899a14b88e"
-  integrity sha1-i2jaHr1/xgOZnPbr7jSkiZoUuI4=
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.3.tgz#8b68da1ebd7fc603999cf6ebee34a4899a14b88e"
+  integrity sha512-xDu17cEfh7Kid/d95kB6tZsLOmSWKCZKtprnhVepjsSaCij+lM3mItSJDuuHDMbCWTh8Ejmebwb+KONcCJ0eXQ==
 
 "@rollup/plugin-node-resolve@^13.0.4":
   version "13.0.4"
@@ -228,8 +228,8 @@ anymatch@~3.1.2:
 
 async-validator@^3.4.0:
   version "3.5.2"
-  resolved "https://registry.nlark.com/async-validator/download/async-validator-3.5.2.tgz#68e866a96824e8b2694ff7a831c1a25c44d5e500"
-  integrity sha1-aOhmqWgk6LJpT/eoMcGiXETV5QA=
+  resolved "https://registry.yarnpkg.com/async-validator/-/async-validator-3.5.2.tgz#68e866a96824e8b2694ff7a831c1a25c44d5e500"
+  integrity sha512-8eLCg00W9pIRZSB781UUX/H6Oskmm8xloZfr09lz5bikRpBVDlJ3hRVuxxP1SxcwsEYfJ4IU8Q19Y8/893r3rQ==
 
 axios@^0.21.1:
   version "0.21.1"
@@ -383,8 +383,8 @@ csstype@^2.6.8:
 
 dayjs@1.x:
   version "1.10.6"
-  resolved "https://registry.nlark.com/dayjs/download/dayjs-1.10.6.tgz?cache=0&sync_timestamp=1625557417200&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdayjs%2Fdownload%2Fdayjs-1.10.6.tgz#288b2aa82f2d8418a6c9d4df5898c0737ad02a63"
-  integrity sha1-KIsqqC8thBimydTfWJjAc3rQKmM=
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.6.tgz#288b2aa82f2d8418a6c9d4df5898c0737ad02a63"
+  integrity sha512-AztC/IOW4L1Q41A86phW5Thhcrco3xuAA+YX/BLpLWWjRcTj5TOt/QImBLmCKlrF7u7k47arTnOyL6GnbG8Hvw==
 
 debug@2.6.9:
   version "2.6.9"
@@ -426,10 +426,10 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
-element-plus@^1.1.0-beta.5:
-  version "1.1.0-beta.5"
-  resolved "https://registry.nlark.com/element-plus/download/element-plus-1.1.0-beta.5.tgz#43ac9908857f88e220f91ce6afcd332fe2b04dcc"
-  integrity sha1-Q6yZCIV/iOIg+Rzmr80zL+KwTcw=
+element-plus@^1.1.0-beta.6:
+  version "1.1.0-beta.6"
+  resolved "https://registry.yarnpkg.com/element-plus/-/element-plus-1.1.0-beta.6.tgz#ba47b09b3ca434b17c6e21cc88934657d6b42ff8"
+  integrity sha512-tcDveAyOxWuombFrR3F5TlqLB0nU1XsULPWNs2ja0hGjDWJNx/Vc06JGeMfHpoXLFZV2VNroJtMjCjTALjWxxg==
   dependencies:
     "@element-plus/icons" "^0.0.11"
     "@popperjs/core" "^2.4.4"
@@ -702,8 +702,8 @@ minimist@^1.2.0:
 
 mitt@^2.1.0:
   version "2.1.0"
-  resolved "https://registry.nlark.com/mitt/download/mitt-2.1.0.tgz?cache=0&sync_timestamp=1624483449786&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fmitt%2Fdownload%2Fmitt-2.1.0.tgz#f740577c23176c6205b121b2973514eade1b2230"
-  integrity sha1-90BXfCMXbGIFsSGylzUU6t4bIjA=
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-2.1.0.tgz#f740577c23176c6205b121b2973514eade1b2230"
+  integrity sha512-ILj2TpLiysu2wkBbWjAmww7TkZb65aiQO+DkVdUTBpBXq+MHYiETENkKFMtsJZX1Lf4pe4QOrTSjIfUwN5lRdg==
 
 mockjs@^1.1.0:
   version "1.1.0"
@@ -742,7 +742,7 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
 
 normalize-wheel@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.npm.taobao.org/normalize-wheel/download/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
+  resolved "https://registry.yarnpkg.com/normalize-wheel/-/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
   integrity sha1-rsiGr/2wRQcNhWRH32Ls+GFG7EU=
 
 nprogress@^0.2.0:
@@ -884,8 +884,8 @@ readdirp@~3.6.0:
 
 resize-observer-polyfill@^1.5.1:
   version "1.5.1"
-  resolved "https://registry.nlark.com/resize-observer-polyfill/download/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
-  integrity sha1-DpAg3T0hAkRY1OvSfiPkAmmBBGQ=
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
 
 resolve@^1.19.0, resolve@^1.20.0:
   version "1.20.0"
