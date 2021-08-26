@@ -1,6 +1,7 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    
+    <div v-if="device ==='mobile' && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+
     <!-- 侧边栏 -->
     <sidebar class="sidebar-container" />
     <div :class="{ hasTagsView : needTagsView }" class="main-container">
@@ -97,8 +98,8 @@ export default defineComponent({
     background: #000;
     opacity: 0.3;
     width: 100%;
-    top: 0;
     height: 100%;
+    top: 0;
     position: absolute;
     z-index: 999;
   }
