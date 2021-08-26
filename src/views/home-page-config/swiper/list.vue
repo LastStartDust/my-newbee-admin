@@ -6,6 +6,7 @@
 
     <el-table :data="list" v-loading="listLoading" border style="width: 100%">
       <el-table-column type="selection" width="55" />
+      <el-table-column align="center" prop="carouselId" label="id" width="55" />
       <el-table-column align="center" prop="carouselUrl" label="轮播图">
         <template #default="scope">
           <img class="carousel-img" :src="scope.row.carouselUrl" alt="轮播图" />
@@ -20,6 +21,15 @@
       </el-table-column>
       <el-table-column align="center" label="排序值" prop="carouselRank" />
       <el-table-column align="center" label="添加时间" prop="createTime" />
+      <el-table-column
+        header-align="center"
+        align="center"
+        label="操作" >
+        <template #default="scope">
+          <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button type="danger" @click="handleRemove(scope.row)">移除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <pagination 
@@ -31,7 +41,9 @@
 
     <AddSwiperDialog
       ref="swiperDialogRef"
-      @reload="getCarouseList"
+      :id="carouselId"
+      :is-edit="isEdit"
+      @reload="handleReload"
     ></AddSwiperDialog>
   </div>
 </template>
@@ -75,22 +87,26 @@ export default defineComponent({
 
     const swiperDialogRef = ref(null)
     const handleAdd = () => {
-      console.log(swiperDialogRef);
       swiperDialogRef.value?.open()
     }
 
-    const dialogVisible = ref(false);
-      
-      const handleClose = (done) => {
-        ElMessageBox
-          .confirm('确认关闭？')
-          .then((_) => {
-            done();
-          })
-          .catch((_) => {
-            // catch
-          });
-      };
+    const carouselId = ref('')
+    const isEdit = ref(false)
+    const handleEdit = (row) => {
+      carouselId.value = row.carouselId
+      isEdit.value = true
+      swiperDialogRef.value?.open()
+    }
+    const handleRemove = (row) => {
+      // TODO
+    }
+    const handleReload = ({ isReload }) => {
+      carouselId.value = ''
+      isEdit.value = false
+      if(isReload) {
+        getCarouseList()
+      }
+    }
 
     return {
       listQuery,
@@ -98,8 +114,11 @@ export default defineComponent({
       getCarouseList,
       swiperDialogRef,
       handleAdd,
-      dialogVisible,
-        handleClose,
+      handleEdit,
+      carouselId,
+      handleRemove,
+      isEdit,
+      handleReload
     }
   },
 })

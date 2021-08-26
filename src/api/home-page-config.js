@@ -26,7 +26,6 @@ export function updateCarousel(data) {
 export function fetchCarousel(id) {
   return request({
     url: `/carousels/${id}`,
-    method: 'get',
-    data
+    method: 'get'
   })
 }

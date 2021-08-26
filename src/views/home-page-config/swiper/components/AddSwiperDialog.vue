@@ -1,7 +1,11 @@
 <template>
-  <el-dialog :title="title" v-model="dialogVisible">
+  <el-dialog 
+    :title="title"
+    v-model="dialogVisible"
+    destroy-on-close
+    :before-close="handleCancel">
     <el-form :model="postForm" :rules="postFormRules" ref="postFormRef">
-      <el-form-item label="图片" prop="url">
+      <el-form-item label="图片" prop="carouselUrl">
         <el-upload
           class="avatar-uploader"
           :action="uploadImgServer"
@@ -15,25 +19,23 @@
         >
           <img
             style="width: 200px; height: 100px; border: 1px solid #e9e9e9"
-            v-if="postForm.url"
-            :src="postForm.url"
+            v-if="postForm.carouselUrl"
+            :src="postForm.carouselUrl"
             class="avatar"
           />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="跳转链接" prop="link">
-        <el-input type="text" v-model="postForm.link"></el-input>
+      <el-form-item label="跳转链接" prop="redirectUrl">
+        <el-input type="text" v-model="postForm.redirectUrl"></el-input>
       </el-form-item>
-      <el-form-item label="排序值" prop="sort">
-        <el-input type="number" v-model="postForm.sort"></el-input>
+      <el-form-item label="排序值" prop="carouselRank">
+        <el-input type="number" v-model="postForm.carouselRank"></el-input>
       </el-form-item>
     </el-form>
 
     <template #footer>
-      <el-button :loading="loading" @click="close"
-        >取 消</el-button
-      >
+      <el-button :loading="loading" @click="handleCancel">取 消</el-button>
       <el-button :loading="loading" type="primary" @click="submitForm"
         >确 定</el-button
       >
@@ -41,7 +43,7 @@
   </el-dialog>
 </template>
 <script>
-import { computed, defineComponent, reactive, readonly, ref, toRefs } from 'vue'
+import { computed, defineComponent, nextTick, reactive, ref, toRefs } from 'vue'
 import { cloneDeep } from 'lodash'
 import { getToken } from '@/utils/auth'
 import { ElMessage } from 'element-plus'
@@ -66,11 +68,11 @@ export default defineComponent({
   },
   emits: ['reload'],
   setup(props, { attrs, slots, emit }) {
-    const defaultForm = readonly({
-      url: '',
-      link: '',
-      sort: '',
-    })
+    const defaultForm = {
+      carouselUrl: '',
+      redirectUrl: '',
+      carouselRank: '',
+    }
     const postFormRef = ref(null)
 
     const state = reactive({
@@ -83,13 +85,15 @@ export default defineComponent({
       }),
       postForm: cloneDeep(defaultForm),
       postFormRules: {
-        url: [{ required: 'true', message: '图片不能为空', trigger: ['change'] }],
-        sort: [
+        carouselUrl: [
+          { required: 'true', message: '图片不能为空', trigger: ['change'] },
+        ],
+        carouselRank: [
           { required: 'true', message: '排序不能为空', trigger: ['change'] },
         ],
       },
       acceptImages: ['jpg', 'jpeg', 'png'],
-      loading: false
+      loading: false,
     })
 
     const handleBeforeUpload = (file) => {
@@ -101,29 +105,36 @@ export default defineComponent({
     }
 
     const handleUrlSuccess = (res) => {
-      state.postForm.url = res.data || ''
+      state.postForm.carouselUrl = res.data || ''
     }
 
     const getDetail = (id) => {
       fetchCarousel(id).then((res) => {
-        Object.assign(state.postForm, res.data || {})
+        state.postForm = Object.assign(state.postForm, res.data)
       })
     }
 
     const open = () => {
       state.dialogVisible = true
-      if (props.isEdit) {
-        getDetail(props.id)
-      }
+      nextTick(() => {
+        if (props.isEdit) {
+          getDetail(props.id)
+        }
+      })
     }
-    const close = () => {
+    const emitClose = (isReload = false) => {
       state.dialogVisible = false
       state.postForm = cloneDeep(defaultForm)
+      emit('reload', { isReload })
+    }
+    const handleCancel = () => {
+      emitClose(false)
     }
 
     const submitForm = () => {
-      postFormRef.value.validate((valid) => {
-        if (valid) {
+      postFormRef.value
+        .validate()
+        .then(() => {
           const postFormCopy = cloneDeep(state.postForm)
           let requestApi = ''
           if (props.isEdit) {
@@ -133,23 +144,20 @@ export default defineComponent({
             requestApi = createCarousel
           }
 
-          satate.loading = true
+          state.loading = true
           requestApi(postFormCopy)
             .then((res) => {
               ElMessage.success(`${props.isEdit ? '编辑成功' : '添加成功'}`)
-              state.visible = false
-              emit('reload')
-            }).catch(err => {
-              console.log(err);
+              emitClose(true)
             })
             .finally(() => {
-              satate.loading = false
+              state.loading = false
             })
-        } else {
-          console.log('提交失败！')
+        })
+        .catch((err) => {
+          console.log(err)
           return false
-        }
-      })
+        })
     }
 
     return {
@@ -159,9 +167,10 @@ export default defineComponent({
       handleUrlSuccess,
       submitForm,
       open,
-      close,
       ...toRefs(state),
-      postFormRef
+      postFormRef,
+      emitClose,
+      handleCancel
     }
   },
 })
