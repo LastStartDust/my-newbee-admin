@@ -7,7 +7,7 @@
         !item.alwaysShow
       ">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)">
+        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{ 'submenu-title-noDropdown' : !isNest}">
           <MenuItemIcon :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" />
           <template #title>
             <MenuItemTitle :title="onlyOneChild.meta.title" />
