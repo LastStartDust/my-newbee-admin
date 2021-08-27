@@ -39,3 +39,10 @@ export function deleteCarousel(ids) {
     method: 'delete'
   })
 }
+
+export function fetchIndexConfigList(query) {
+  return request({
+    url: '/indexConfigs',
+    params: query
+  })
+}
