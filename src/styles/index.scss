@@ -124,6 +124,11 @@ aside {
 //main-container全局样式
 .app-container {
   padding: 20px;
+
+  // 操作区域容器样式
+  .operate-container {
+    margin-bottom: 20px;
+  }
 }
 
 .components-container {

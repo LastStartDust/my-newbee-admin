@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
-    <el-row>
+    <el-card class="operate-container" shadow="never">
       <el-button type="primary" @click="handleAdd">添加轮播图</el-button>
       <el-button type="danger" @click="handlebatchRemove" :disabled="multipleSelection.length <= 0">批量删除</el-button>
-    </el-row>
+    </el-card>
 
     <el-table :data="list" v-loading="listLoading" border style="width: 100%" @selection-change="multipleSelection = $event">
       <el-table-column type="selection" width="55" />
@@ -169,4 +169,5 @@ export default defineComponent({
   width: 100px;
   height: 100px;
 }
+
 </style>
