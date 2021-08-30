@@ -46,3 +46,36 @@ export function fetchIndexConfigList(query) {
     params: query
   })
 }
+
+export function createIndexConfig(data) {
+  return request({
+    url: '/indexConfigs',
+    method: 'post',
+    data
+  })
+}
+
+export function updateIndexConfig(data) {
+  return request({
+    url: '/indexConfigs',
+    method: 'put',
+    data
+  })
+}
+
+export function fetchIndexConfig(id) {
+  return request({
+    url: `/indexConfigs/${id}`,
+    method: 'get'
+  })
+}
+
+export function deleteIndexConfig(ids) {
+  return request({
+    url: `/indexConfigs`,
+    data: {
+      ids,
+    },
+    method: 'delete'
+  })
+}

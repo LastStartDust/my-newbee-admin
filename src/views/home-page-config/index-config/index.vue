@@ -14,7 +14,7 @@
           </span>
         </template>
 
-        <IndexConfigList :type="+tabItem.name"></IndexConfigList>
+        <IndexConfigList :config-type="+tabItem.name"></IndexConfigList>
       </el-tab-pane>
     </el-tabs>
   </div>

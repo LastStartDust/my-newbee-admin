@@ -4,7 +4,7 @@
       <el-button type="primary" @click="handleAdd">添加</el-button>
       <el-button
         type="danger"
-        @click="handlebatchRemove"
+        @click="handleBatchRemove"
         :disabled="multipleSelection.length <= 0"
         >批量删除</el-button
       >
@@ -15,7 +15,7 @@
       v-loading="listLoading"
       border
       style="width: 100%"
-      @selection-change="multipleSelection = $event"
+      @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" />
       <el-table-column align="center" prop="configId" label="id" width="55" />
@@ -48,20 +48,31 @@
       v-model:limit="listQuery.limit"
       @pagination="getList"
     />
+    
+    <IndexConfigDialog
+      ref="indexConfigDialogRef"
+      :id="configId"
+      :is-edit="isEdit"
+      :config-type="configType"
+      @reload="handleReload"
+    ></IndexConfigDialog>
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, reactive, toRefs } from 'vue'
-import { fetchIndexConfigList } from '@/api/home-page-config'
+import { defineComponent, onMounted, reactive, ref, toRefs } from 'vue'
+import { fetchIndexConfigList, deleteIndexConfig } from '@/api/home-page-config'
+import IndexConfigDialog from './IndexConfigDialog.vue';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default defineComponent({
   name: 'IndexConfigList',
   props: {
-    type: {
+    configType: {
       type: Number,
       required: true,
     },
   },
+  components: { IndexConfigDialog },
   setup(props, { attrs, slots, emit }) {
     const state = reactive({
       list: [],
@@ -72,14 +83,18 @@ export default defineComponent({
         limit: 10,
       },
       multipleSelection: [],
+      configId: '',
+      isEdit: false
     })
+
+    const indexConfigDialogRef = ref(null)
 
     const getList = () => {
       state.listLoading = true
       fetchIndexConfigList({
         pageNumber: state.listQuery.page,
         pageSize: state.listQuery.limit,
-        configType: props.type,
+        configType: props.configType,
       })
         .then((res) => {
           state.list = res.data.list
@@ -92,17 +107,76 @@ export default defineComponent({
     onMounted(() => {
       getList()
     })
-    const handleAdd = () => {}
-    const handlebatchRemove = () => {}
-    const handleEdit = () => {}
-    const handleRemove = () => {}
+
+    const handleAdd = () => {
+      indexConfigDialogRef.value.open()
+    }
+    const handleEdit = ({ configId }) => {
+      state.configId = configId
+      state.isEdit = true
+      indexConfigDialogRef.value.open()
+    }
+
+    const multipleSelection = ref([])
+    const handleBatchRemove = () => {
+      if(!multipleSelection.value.length) {
+        ElMessage.error('请选择需要移除的商品')
+        return false
+      }
+      const ids = multipleSelection.value.map(item => item.configId)
+        ElMessageBox.confirm('此操作将删除所选的商品, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+        .then(() => {
+          deleteIndexConfig(ids)
+          .then(() => {
+            ElMessage.success('删除成功')
+          })
+        })
+        .catch(() => {
+          ElMessage.info('已取消删除')
+        });
+    }
+
+    const handleRemove = (row) => {
+      ElMessageBox.confirm('此操作将删除该商品, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+        .then(() => {
+          deleteIndexConfig(ids)
+          .then(() => {
+            ElMessage.success('删除成功')
+          })
+        })
+        .catch(() => {
+          ElMessage.info('已取消删除')
+        });
+    }
+    const handleReload = ({ isReload }) => {
+      state.configId = ''
+      state.isEdit = false
+      if(isReload) {
+        getList()
+      }
+    }
+    const handleSelectionChange = (val) => {
+      multipleSelection.value = val
+    }
     return {
       ...toRefs(state),
       handleAdd,
-      handlebatchRemove,
+      handleBatchRemove,
       handleEdit,
       handleRemove,
       getList,
+      indexConfigDialogRef,
+      handleReload,
+      multipleSelection,
+      handleSelectionChange
     }
   },
 })
