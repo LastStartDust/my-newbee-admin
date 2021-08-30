@@ -147,6 +147,7 @@ export default defineComponent({
           type: 'warning',
         })
         .then(() => {
+          const ids = [row.configId]
           deleteIndexConfig(ids)
           .then(() => {
             ElMessage.success('删除成功')
