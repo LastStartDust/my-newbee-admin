@@ -63,6 +63,14 @@ export default defineComponent({
       configRank: '',
     }
     const postFormRef = ref(null)
+    const checkRank = (rule, value, callback) => {
+      if (value < 0 || value > 200) {
+        callback(new Error('排序值不能小于0 或者大于200'))
+      } else {
+        callback()
+      }
+    }
+
     const state = reactive({
       dialogVisible: false,
       title: computed(() => {
@@ -75,12 +83,14 @@ export default defineComponent({
       postFormRules: {
         configName: [
           { required: 'true', message: '商品不能为空', trigger: ['blur'] },
+          { max: 128, message: '商品名称不能超过128个字符', trigger: ['blur'] },
         ],
         goodsId: [
           { required: 'true', message: '商品编号不能为空', trigger: ['blur'] },
         ],
         configRank: [
           { required: 'true', message: '排序不能为空', trigger: ['blur'] },
+          { validator: checkRank, trigger: ['blur'] },
         ],
       },
       loading: false,
