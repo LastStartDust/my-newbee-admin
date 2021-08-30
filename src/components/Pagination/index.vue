@@ -16,6 +16,8 @@
 
 <script>
 import { computed, defineComponent, toRefs } from 'vue'
+import { scrollTo } from '@/utils/scroll-to'
+
 export default defineComponent({
   name: 'Pagination',
   props: {
@@ -73,12 +75,16 @@ export default defineComponent({
         emit('update:limit', val)
       }
     })
-
+    const autoScrollToTop = () => {
+      props.autoScroll && scrollTo(0, 800)
+    }
     const handleSizeChange = (newLimit) => {
       emit('pagination', { page: currentPage.value, limit: newLimit })
+      autoScrollToTop()
     }
     const handleCurrentChange = (newPage) => {
       emit('pagination', { page: newPage, limit: pageSize.value })
+      autoScrollToTop()
     }
     return {
       ...toRefs(props),
