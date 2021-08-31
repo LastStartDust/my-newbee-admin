@@ -38,6 +38,14 @@
       v-model:limit="listQuery.limit"
       @pagination="getList"
     />
+
+    <CategoryDetailDialog
+      ref="categoryDetailDialogRef"
+      :id="categoryId"
+      :is-edit="isEdit"
+      @reload="handleReload"
+    ></CategoryDetailDialog>
+
   </div>
 </template>
 <script>
@@ -47,19 +55,22 @@ import {
   onBeforeUnmount,
   onMounted,
   reactive,
+  ref,
   watch,
 } from 'vue'
 import { fetchCategoryList } from '@/api/module-mgmt'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import CategoryDetailDialog from './components/CategoryDetailDialog.vue';
 
 export default defineComponent({
   name: 'CategoryMgmtList',
+  components: { CategoryDetailDialog },
   setup(props, { attrs, slots, emit }) {
     // const { title } = toRefs(props)
     const router = useRouter()
     const route = useRoute()
-
+    const categoryDetailDialogRef = ref(null)
     const state = reactive({
       list: [],
       total: 0,
@@ -71,6 +82,8 @@ export default defineComponent({
       multipleSelection: [],
       level: 1, // 等级参数
       parent_id: 0, // 父级id
+      categoryId: '',
+      isEdit: false
     })
 
     onMounted(() => {
@@ -109,11 +122,12 @@ export default defineComponent({
     }
 
     const handleAdd = () => {
-      // TODO
+      categoryDetailDialogRef.value.open()
     }
     const handleEdit = (row) => {
-      // TODO
-      console.log('编辑', row);
+      state.categoryId = row.categoryId
+      state.isEdit = true
+      categoryDetailDialogRef.value.open()
     }
     const handleRemove = (row) => {
       // TODO
@@ -124,6 +138,14 @@ export default defineComponent({
 
     const handleSelectionChange = (val) => {
       state.multipleSelection = val
+    }
+
+    const handleReload = ({ isReload }) => {
+      state.categoryId = ''
+      state.isEdit = false
+      if(isReload) {
+        getList()
+      }
     }
     // 下一级分类
     const handleNext = (row) => {
@@ -149,6 +171,8 @@ export default defineComponent({
       handleRemove,
       handlebatchRemove,
       handleNext,
+      categoryDetailDialogRef,
+      handleReload
     }
   },
 })
