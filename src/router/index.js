@@ -204,6 +204,22 @@ export const asyncRoutes = [
         name: "CategoryMgmtList",
         component: () => import("@/views/module-mgmt/category-mgmt/index.vue"),
         meta: { title: "分类管理", icon: "category-mgmt" },
+        children: [
+          {
+            path: "level2",
+            name: "CategoryLevel2",
+            component: () => import("@/views/module-mgmt/category-mgmt/index.vue"),
+            meta: { title: "分类二级管理", icon: "category-mgmt" },
+            hidden: true
+          },
+          {
+            path: "level3",
+            name: "CategoryLevel3",
+            component: () => import("@/views/module-mgmt/category-mgmt/index.vue"),
+            meta: { title: "分类三级管理", icon: "category-mgmt" },
+            hidden: true
+          }
+        ]
       }
     ]
   },

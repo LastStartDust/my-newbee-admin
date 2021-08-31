@@ -37,7 +37,8 @@ import {
   ElTableColumn,
   ElRow,
   ElCol,
-  ElUpload
+  ElUpload,
+  ElPageHeader
 } from 'element-plus'
 import 'element-plus/packages/theme-chalk/src/base.scss'
 
@@ -78,7 +79,8 @@ const components = [
   ElTableColumn,
   ElRow,
   ElCol,
-  ElUpload
+  ElUpload,
+  ElPageHeader
 ]
 
 // 插件列表
