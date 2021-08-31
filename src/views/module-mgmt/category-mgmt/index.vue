@@ -1,6 +1,10 @@
 <template>
   <div class="app-container">
-    <el-page-header v-if="level > 1" @back="() => $router.back()" style="margin-bottom: 12px;" />
+    <el-page-header
+      v-if="level > 1"
+      @back="() => $router.back()"
+      style="margin-bottom: 12px"
+    />
 
     <el-card class="operate-container" shadow="never">
       <el-button type="primary" @click="handleAdd">添加分类</el-button>
@@ -25,9 +29,19 @@
       <el-table-column align="center" label="创建时间" prop="createTime" />
       <el-table-column header-align="center" align="center" label="操作">
         <template #default="scope">
-          <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button type="primary" v-if="scope.row.categoryLevel < 3" icon="el-icon-caret-right" @click="handleNext(scope.row)">下级分类</el-button>
-          <el-button type="primary" @click="handleRemove(scope.row)">移除</el-button>
+          <el-button type="primary" @click="handleEdit(scope.row)"
+            >编辑</el-button
+          >
+          <el-button
+            type="primary"
+            v-if="scope.row.categoryLevel < 3"
+            icon="el-icon-caret-right"
+            @click="handleNext(scope.row)"
+            >下级分类</el-button
+          >
+          <el-button type="danger" @click="handleRemove(scope.row)"
+            >移除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -45,7 +59,6 @@
       :is-edit="isEdit"
       @reload="handleReload"
     ></CategoryDetailDialog>
-
   </div>
 </template>
 <script>
@@ -58,10 +71,10 @@ import {
   ref,
   watch,
 } from 'vue'
-import { fetchCategoryList } from '@/api/module-mgmt'
+import { deleteCategory, fetchCategoryList } from '@/api/module-mgmt'
 import { useRoute, useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import CategoryDetailDialog from './components/CategoryDetailDialog.vue';
+import { ElMessage, ElMessageBox } from 'element-plus'
+import CategoryDetailDialog from './components/CategoryDetailDialog.vue'
 
 export default defineComponent({
   name: 'CategoryMgmtList',
@@ -83,7 +96,7 @@ export default defineComponent({
       level: 1, // 等级参数
       parent_id: 0, // 父级id
       categoryId: '',
-      isEdit: false
+      isEdit: false,
     })
 
     onMounted(() => {
@@ -130,10 +143,39 @@ export default defineComponent({
       categoryDetailDialogRef.value.open()
     }
     const handleRemove = (row) => {
-      // TODO
+      ElMessageBox.confirm('此操作将删除该分类, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          deleteCategory([row.categoryId]).then(() => {
+            ElMessage.success('删除成功')
+          })
+        })
+        .catch(() => {
+          ElMessage.info('已取消删除')
+        })
     }
     const handlebatchRemove = () => {
-      // TODO
+      if (!state.multipleSelection.length) {
+        ElMessage.warning('请先选择需要移除的分类！')
+        return false
+      }
+      const ids = state.multipleSelection.map((item) => item.categoryId)
+      ElMessageBox.confirm('此操作将删除所选的分类, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          deleteCategory(ids).then(() => {
+            ElMessage.success('删除成功')
+          })
+        })
+        .catch(() => {
+          ElMessage.info('已取消删除')
+        })
     }
 
     const handleSelectionChange = (val) => {
@@ -143,7 +185,7 @@ export default defineComponent({
     const handleReload = ({ isReload }) => {
       state.categoryId = ''
       state.isEdit = false
-      if(isReload) {
+      if (isReload) {
         getList()
       }
     }
@@ -172,7 +214,7 @@ export default defineComponent({
       handlebatchRemove,
       handleNext,
       categoryDetailDialogRef,
-      handleReload
+      handleReload,
     }
   },
 })
