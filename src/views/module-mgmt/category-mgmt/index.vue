@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-page-header v-if="level > 1" @back="() => $router.back()" style="margin-bottom: 5px;" />
+    <el-page-header v-if="level > 1" @back="() => $router.back()" style="margin-bottom: 12px;" />
 
     <el-card class="operate-container" shadow="never">
       <el-button type="primary" @click="handleAdd">添加分类</el-button>
@@ -26,8 +26,8 @@
       <el-table-column header-align="center" align="center" label="操作">
         <template #default="scope">
           <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button v-if="scope.row.categoryLevel < 3" icon="el-icon-caret-right" @click="handleNext(scope.row)">下级分类</el-button>
-          <el-button type="danger" @click="handleRemove(scope.row)">移除</el-button>
+          <el-button type="primary" v-if="scope.row.categoryLevel < 3" icon="el-icon-caret-right" @click="handleNext(scope.row)">下级分类</el-button>
+          <el-button type="primary" @click="handleRemove(scope.row)">移除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -113,6 +113,7 @@ export default defineComponent({
     }
     const handleEdit = (row) => {
       // TODO
+      console.log('编辑', row);
     }
     const handleRemove = (row) => {
       // TODO
