@@ -190,6 +190,23 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: "/module-mgmt",
+    name: "ModuleMgmt",
+    meta: { title: "模块管理", icon: "el-icon-menu" },
+    component: Layout,
+    redirect: { name: "SwiperList" },
+    alwaysShow: true,
+
+    children: [
+      {
+        path: "category-mgmt-list",
+        name: "CategoryMgmtList",
+        component: () => import("@/views/module-mgmt/category-mgmt/index.vue"),
+        meta: { title: "分类管理", icon: "category-mgmt" },
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '/:pathMatch(.*)', redirect: { name: '404' }, hidden: true }
 ]
