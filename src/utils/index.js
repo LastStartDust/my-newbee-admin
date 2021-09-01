@@ -32,3 +32,48 @@ export const env = import.meta.env
   }
   return tempOptionsList
 }
+
+// 空值
+export function isEmpty(v) {
+  if (v === '' || v === undefined || v === null) {
+    return true
+  }
+
+  if (typeof v === 'object') {
+    if (Array.isArray(v)) {
+      return v.length === 0
+    } else {
+      return Object.keys(v).length === 0
+    }
+  }
+  return false
+}
+
+/**
+ * 
+ * @param {String} url 文件的url
+ * @returns 解析后的值
+ */
+export function parseImgUrl(url) {
+  if (url && url.startsWith('http')) {
+    // 当 url 以 http 开头时候，我们返回原路径
+    return url
+  } else {
+    // 否则，我们给路径添加 host，如下
+    url = `http://backend-api-02.newbee.ltd${url}`
+    return url
+  }
+}
+
+/**
+ *
+ * @description 获取选项的对应名称
+ * @param {Array} options 选项列表
+ * @param {Number} id 当前选项值
+ * @param {String} keyName 键名
+ * @param {String} labelName label属性名
+ */
+ export function getOptionNameById(options, id, keyName = 'value', labelName = 'label') {
+  const item = !isEmpty(options) && Array.isArray(options) && options.find(item => item[keyName] === id)
+  return isEmpty(item) ? '' : item[labelName]
+}
