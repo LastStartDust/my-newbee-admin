@@ -70,10 +70,12 @@ import {
   goodsSellStatusMap
 } from './options';
 import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'GoodsList',
   setup() {
+    const router = useRouter()
     const state = reactive({
       list: [],
       listLoading: false,
@@ -102,12 +104,13 @@ export default defineComponent({
     }
 
     const handleAdd = () => {
-      // TODO
+      router.push({ name: 'AddGoods' })
     }
 
     const handleEdit = (row) => {
-      // TODO
+      router.push({ name: 'EditGoods' })
     }
+
     // 上架和下架
     const handleUpdateStatus = (row, status) => {
       updateGoodsStatus({
