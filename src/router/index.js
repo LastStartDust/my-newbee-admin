@@ -146,28 +146,6 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: "/goods",
-    name: "Goods",
-    meta: { title: "Goods", icon: "el-icon-s-shop" },
-    component: Layout,
-    redirect: { name: "GoodsList" },
-
-    children: [
-      {
-        path: "list",
-        name: "GoodsList",
-        component: () => import("@/views/goods/index.vue"),
-        meta: { title: "GoodsList", icon: "el-icon-s-order" },
-      },
-      {
-        path: "add",
-        name: "AddGoods",
-        component: () => import("@/views/goods/add.vue"),
-        meta: { title: "AddGoods", icon: "el-icon-circle-plus-outline", noCache: true },
-      }
-    ]
-  },
-  {
     path: "/home-page-config",
     name: "HomePageConfig",
     meta: { title: "首页配置", icon: "el-icon-set-up" },
@@ -220,6 +198,12 @@ export const asyncRoutes = [
             hidden: true
           }
         ]
+      },
+      {
+        path: "goods-list",
+        name: "GoodsList",
+        component: () => import("@/views/module-mgmt/goods/index.vue"),
+        meta: { title: "商品管理", icon: "el-icon-s-order" },
       }
     ]
   },
