@@ -1,13 +1,13 @@
 <template>
-  <AddGoodsDetail :is-edit="true" />
+  <GoodsDetail :is-edit="true" />
 </template>
 <script>
 import { defineComponent } from 'vue'
-import AddGoodsDetail from './components/AddGoodsDetail.vue'
+import GoodsDetail from './components/GoodsDetail.vue'
 export default defineComponent({
   name: 'EditGoods',
   components: {
-    AddGoodsDetail
+    GoodsDetail
   }
 })
 </script>

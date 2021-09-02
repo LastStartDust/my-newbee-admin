@@ -80,3 +80,11 @@ export function fetchGoods(id) {
     method: 'get'
   })
 }
+
+export function fetchCategories(params) {
+  return request({
+    url: `/categories`,
+    method: 'get',
+    params
+  })
+}
