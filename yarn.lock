@@ -72,7 +72,7 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@rollup/pluginutils@^4.1.1":
+"@rollup/pluginutils@^4.1.0", "@rollup/pluginutils@^4.1.1":
   version "4.1.1"
   resolved "https://registry.nlark.com/@rollup/pluginutils/download/@rollup/pluginutils-4.1.1.tgz?cache=0&sync_timestamp=1626393703548&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40rollup%2Fpluginutils%2Fdownload%2F%40rollup%2Fpluginutils-4.1.1.tgz#1d4da86dd4eded15656a57d933fda2b9a08d47ec"
   integrity sha1-HU2obdTt7RVlalfZM/2iuaCNR+w=
@@ -426,10 +426,10 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
-element-plus@^1.1.0-beta.6:
-  version "1.1.0-beta.6"
-  resolved "https://registry.yarnpkg.com/element-plus/-/element-plus-1.1.0-beta.6.tgz#ba47b09b3ca434b17c6e21cc88934657d6b42ff8"
-  integrity sha512-tcDveAyOxWuombFrR3F5TlqLB0nU1XsULPWNs2ja0hGjDWJNx/Vc06JGeMfHpoXLFZV2VNroJtMjCjTALjWxxg==
+element-plus@^1.1.0-beta.8:
+  version "1.1.0-beta.8"
+  resolved "https://registry.yarnpkg.com/element-plus/-/element-plus-1.1.0-beta.8.tgz#e40a2b4767ccbee1ff9aa6d4ed284863ad246e1c"
+  integrity sha512-L0z4UoaazLgvimU+Eb8KHwBdX6ND2sSOO/ja70FMJl7Y3T+PxP95OZAkpr1sNiBzMaVVdMef4lQLBwPqTO6PKw==
   dependencies:
     "@element-plus/icons" "^0.0.11"
     "@popperjs/core" "^2.4.4"
@@ -449,6 +449,11 @@ encodeurl@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
   integrity sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
+
+es-module-lexer@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.6.0.tgz#e72ab05b7412e62b9be37c37a09bdb6000d706f0"
+  integrity sha512-f8kcHX1ArhllUtb/wVSyvygoKCznIjnxhLxy7TCvIiMdT7fL4ZDTIKaadMe6eLvOXg6Wk02UeoFgUoZ2EKZZUA==
 
 es-module-lexer@^0.7.1:
   version "0.7.1"
@@ -1020,6 +1025,14 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
+
+vite-plugin-element-plus@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/vite-plugin-element-plus/-/vite-plugin-element-plus-0.0.12.tgz#ff9a3f4ca1598f83f3b2b71bd99046db1ca227f8"
+  integrity sha512-Y4OoM8dsFKLa2FTSKqb6L0rkLnFXXJLpXbsPmSmmwGwtQoikajjvW6hrxG1wzxJtEp+dXTVQn7InIxdcBq2ICw==
+  dependencies:
+    "@rollup/pluginutils" "^4.1.0"
+    es-module-lexer "^0.6.0"
 
 vite-plugin-mock@^2.9.5:
   version "2.9.5"

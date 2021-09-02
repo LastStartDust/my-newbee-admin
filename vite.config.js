@@ -1,10 +1,10 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-import styleImport from 'vite-plugin-style-import'
 import { svgBuilder } from './src/plugins/svg-builder'
 import { viteMockServe } from 'vite-plugin-mock'
 import settings from './src/settings'
+import VitePluginElementPlus from 'vite-plugin-element-plus'
 
 // https://vitejs.dev/config/
 export default ({mode}) => {
@@ -16,19 +16,12 @@ export default ({mode}) => {
   return defineConfig({
     plugins: [
       vue(),
-      styleImport({
-        libs: [{
-          libraryName: 'element-plus',
-          esModule: true,
-          ensureStyleFile: true,
-          resolveStyle: (name) => {
-            name = name.slice(3)
-            return `element-plus/packages/theme-chalk/src/${name}.scss`;
-          },
-          resolveComponent: (name) => {
-            return `element-plus/lib/${name}`;
-          },
-        }]
+      VitePluginElementPlus({
+        // 如果你需要使用 [component name].scss 源文件，你需要把下面的注释取消掉。
+        // 对于所有的 API 你可以参考 https://github.com/element-plus/vite-plugin-element-plus
+        // 的文档注释
+        // useSource: true
+        format: mode === 'development' ? 'esm' : 'cjs',
       }),
       svgBuilder('./src/icons/svg/'),
       viteMockServe({
