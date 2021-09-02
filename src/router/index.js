@@ -203,7 +203,7 @@ export const asyncRoutes = [
         path: "goods-list",
         name: "GoodsList",
         component: () => import("@/views/module-mgmt/goods/index.vue"),
-        meta: { title: "商品管理", icon: "el-icon-s-order" },
+        meta: { title: "商品管理", icon: "el-icon-goods" },
       },
       {
         path: "add-goods",
