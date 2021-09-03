@@ -18,7 +18,7 @@
 
   <div v-if="imgUrl" class="image-preview image-app-preview">
     <div class="image-preview-wrapper">
-      <img class="avatar" v-if="imgUrl" :src="imgUrl" />
+      <img class="thumbnail-img" v-if="imgUrl" :src="imgUrl" />
       <div class="image-preview-action">
         <i class="el-icon-delete" @click="handleRemove" />
         <i class="el-icon-zoom-in" @click="handlePictureCardPreview" />
@@ -116,11 +116,6 @@ $size: 120px;
     line-height: $size;
     text-align: center;
   }
-  .avatar {
-    width: $size;
-    height: $size;
-    display: block;
-  }
 }
 
 .image-preview {
@@ -135,31 +130,34 @@ $size: 120px;
     position: relative;
     width: 100%;
     height: 100%;
-    img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .thumbnail-img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .image-preview-action {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      position: absolute;
       width: 100%;
       height: 100%;
-    }
-  }
+      left: 0;
+      top: 0;
+      color: #fff;
+      opacity: 0;
+      font-size: 20px;
+      background-color: rgba(0, 0, 0, 0.5);
+      transition: opacity 0.3s;
+      cursor: pointer;
+      line-height: 200px;
 
-  .image-preview-action {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    color: #fff;
-    opacity: 0;
-    font-size: 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-    transition: opacity 0.3s;
-    cursor: pointer;
-    line-height: 200px;
-
-    &:hover {
-      opacity: 1;
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 }
