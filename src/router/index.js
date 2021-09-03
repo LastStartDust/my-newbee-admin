@@ -209,14 +209,14 @@ export const asyncRoutes = [
         path: "add-goods",
         name: "AddGoods",
         component: () => import("@/views/module-mgmt/goods/add.vue"),
-        meta: { title: "新增商品" },
+        meta: { title: "新增商品", noCache: true },
         hidden: true
       },
       {
         path: "edit-goods",
         name: "EditGoods",
         component: () => import("@/views/module-mgmt/goods/edit.vue"),
-        meta: { title: "编辑商品" },
+        meta: { title: "编辑商品", noCache: true  },
         hidden: true
       }
     ]

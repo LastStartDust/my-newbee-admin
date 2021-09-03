@@ -108,7 +108,7 @@ export default defineComponent({
     }
 
     const handleEdit = (row) => {
-      router.push({ name: 'EditGoods' })
+      router.push({ name: 'EditGoods', query: { id: row.goodsId } })
     }
 
     // 上架和下架

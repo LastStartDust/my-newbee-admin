@@ -8,7 +8,7 @@
       label-suffix="："
     >
     <el-form-item label="商品分类" prop="goodsCategoryId">
-      <el-cascader v-model="selectCategoryId" :props="cascaderProps"></el-cascader>
+      <el-cascader v-model="selectCategoryId" :props="cascaderProps" :placeholder="defaultCate || '请选择商品分类'"></el-cascader>
     </el-form-item>
     <el-form-item label="商品名称" prop="goodsName" class="w300">
       <el-input v-model="postForm.goodsName" placeholder="请输入商品名称" class="w300"></el-input>
@@ -53,11 +53,11 @@
 import { defineComponent, ref, reactive, toRefs, computed, onMounted, onBeforeMount } from 'vue'
 import { cloneDeep } from 'lodash'
 import { goodsSellStatus } from '../options'
-import { createGoods, fetchCategories, updateGoods } from '@/api/module-mgmt'
-import { isEmpty } from '@/utils'
+import { createGoods, fetchCategories, fetchGoods, updateGoods } from '@/api/module-mgmt'
+import { isEmpty, parseImgUrl } from '@/utils'
 import SingleUpload from '@/components/SingleUpload/index.vue'
 import WangEditor from 'wangeditor'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { uploadImgServer } from '@/utils/upload'
 import { getToken } from '@/utils/auth'
@@ -68,11 +68,7 @@ export default defineComponent({
     isEdit: {
       type: Boolean,
       default: false,
-    },
-    id: {
-      type: [Number, String],
-      default: '',
-    },
+    }
   },
   components: {
     SingleUpload
@@ -92,6 +88,7 @@ export default defineComponent({
       goodsDetailContent: '',
     }
     const state = reactive({
+      id: '',
       postForm: cloneDeep(defaultPostForm),
       postFormRules: {
         goodsCategoryId: [
@@ -145,13 +142,45 @@ export default defineComponent({
           })
         },
       },
-      loading: false
+      loading: false,
+      defaultCate: ''
     })
 
     const editorRef = ref(null)
     let editorInstance = null
+    const route = useRoute()
     onMounted(() => {
       initEditor()
+      if(props.isEdit) {
+        state.id = +route.query.id
+        
+        if(state.id) {
+          fetchGoods(state.id)
+            .then(res => {
+              const { goods, firstCategory, secondCategory, thirdCategory } = res.data
+              Object.keys(state.postForm).map(key => {
+                const currentValue = goods[key]
+                if(key === 'goodsSellStatus') {
+                  state.postForm[key] = `${currentValue}`
+                } else if(key === 'goodsCoverImg') {
+                  state.postForm[key] = parseImgUrl(currentValue)
+                } else if(key === 'goodsDetailContent') {
+                  state.postForm[key] = currentValue
+                  if(editorInstance) {
+                    // 初始化商品详情 html
+                    editorInstance.txt.html(currentValue)
+                  }
+                }
+                else {
+                  state.postForm[key] = currentValue
+                }
+              })
+              
+              state.defaultCate = `${firstCategory.categoryName}/${secondCategory.categoryName}/${thirdCategory.categoryName}`
+            })
+
+        }
+      }
     })
     onBeforeMount(() => {
       if(editorInstance) {
@@ -221,12 +250,10 @@ export default defineComponent({
         .then(() => {
           const postFormCopy = cloneDeep(state.postForm)
           postFormCopy.goodsDetailContent = editorInstance.txt.html()
-          let requestApi = ''
-          if (props.isEdit) {
-            postFormCopy.id = props.id
+          let requestApi = createGoods
+          if(props.isEdit) {
             requestApi = updateGoods
-          } else {
-            requestApi = createGoods
+            postFormCopy.goodsId = state.id
           }
 
           state.loading = true
