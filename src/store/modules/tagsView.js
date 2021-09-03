@@ -151,7 +151,21 @@ const actions = {
 
   updateVisitedView({ commit }, view) {
     commit('UPDATE_VISITED_VIEW', view)
-  }
+  },
+
+  delCurrentView({ commit, state }, params) {
+    return new Promise(resolve => {
+      const { view, $router, to } = params
+      commit('DEL_VISITED_VIEW', view)
+      const latestView = [...state.visitedViews].slice(-1)[0]
+      if (to || latestView) {
+        $router.push(to || latestView)
+      } else {
+        $router.push('/')
+      }
+      resolve()
+    })
+  },
 }
 
 export default {
