@@ -57,10 +57,11 @@ import { createGoods, fetchCategories, fetchGoods, updateGoods } from '@/api/mod
 import { isEmpty, parseImgUrl } from '@/utils'
 import SingleUpload from '@/components/SingleUpload/index.vue'
 import WangEditor from 'wangeditor'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { uploadImgServer } from '@/utils/upload'
 import { getToken } from '@/utils/auth'
+import { useCloseCurrentPage } from '@/layout/components/TagView/hook/index'
 
 export default defineComponent({
   name: 'GoodsDetail',
@@ -243,7 +244,6 @@ export default defineComponent({
       }
     })
 
-    const router = useRouter()
     const handleSumbit = () => {
       postFormRef.value
         .validate()
@@ -260,7 +260,7 @@ export default defineComponent({
           requestApi(postFormCopy)
             .then((res) => {
               ElMessage.success(`${props.isEdit ? '编辑成功' : '添加成功'}`)
-              router.push({ name: 'GoodsList' })
+              useCloseCurrentPage(route,'goods-list')
             })
             .finally(() => {
               state.loading = false
@@ -273,7 +273,7 @@ export default defineComponent({
     }
 
     const handleCancel = () => {
-      router.back()
+      useCloseCurrentPage(route,'goods-list')
     }
 
     return {
