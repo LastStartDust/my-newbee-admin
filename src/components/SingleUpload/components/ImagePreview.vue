@@ -1,6 +1,6 @@
 <template>
   <el-dialog :model-value="visible" @close="handleClose">
-    <img style="width: 100%;" :src="imgUrl" alt="" />
+    <img class="img" :src="imgUrl" alt="" />
   </el-dialog>
 </template>
 <script>
@@ -28,4 +28,11 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.img {
+  max-height: 80vh;
+  max-width: 80vw;
+  margin: auto;
+  display: block;
+}
+</style>
