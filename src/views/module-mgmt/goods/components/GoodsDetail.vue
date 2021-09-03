@@ -13,8 +13,8 @@
     <el-form-item label="商品名称" prop="goodsName" class="w300">
       <el-input v-model="postForm.goodsName" placeholder="请输入商品名称" class="w300"></el-input>
     </el-form-item>
-    <el-form-item label="商品简洁" prop="goodsIntro">
-      <el-input v-model="postForm.goodsIntro" placeholder="请输入商品简洁" class="w300"></el-input>
+    <el-form-item label="商品简介" prop="goodsIntro">
+      <el-input v-model="postForm.goodsIntro" placeholder="请输入商品简介" class="w300"></el-input>
     </el-form-item>
     <el-form-item label="商品原价" prop="originalPrice">
       <el-input v-model.number="postForm.originalPrice" placeholder="请输入商品原价" type="number" class="w300"></el-input>
@@ -37,17 +37,30 @@
     <el-form-item label="商品主图" prop="goodsCoverImg">
       <SingleUpload v-model:imgUrl="postForm.goodsCoverImg"></SingleUpload>
     </el-form-item>
+    <el-form-item label="详情内容">
+      <div ref='editorRef'></div>
+    </el-form-item>
+
+    <el-form-item>
+      <el-button :loading="loading" type="primary" @click="handleSumbit">提 交</el-button>
+      <el-button @click="handleCancel">取 消</el-button>
+    </el-form-item>
 
     </el-form>
   </div>
 </template>
 <script>
-import { defineComponent, ref, reactive, toRefs, computed } from 'vue'
+import { defineComponent, ref, reactive, toRefs, computed, onMounted, onBeforeMount } from 'vue'
 import { cloneDeep } from 'lodash'
 import { goodsSellStatus } from '../options'
-import { fetchCategories } from '@/api/module-mgmt';
+import { createGoods, fetchCategories, updateGoods } from '@/api/module-mgmt'
 import { isEmpty } from '@/utils'
-import SingleUpload from '@/components/SingleUpload/index.vue';
+import SingleUpload from '@/components/SingleUpload/index.vue'
+import WangEditor from 'wangeditor'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { uploadImgServer } from '@/utils/upload'
+import { getToken } from '@/utils/auth'
 
 export default defineComponent({
   name: 'GoodsDetail',
@@ -64,7 +77,7 @@ export default defineComponent({
   components: {
     SingleUpload
   },
-  setup() {
+  setup(props) {
     const postFormRef = ref(null)
     const defaultPostForm = {
       goodsCategoryId: '',
@@ -80,7 +93,32 @@ export default defineComponent({
     }
     const state = reactive({
       postForm: cloneDeep(defaultPostForm),
-      postFormRules: {},
+      postFormRules: {
+        goodsCategoryId: [
+          { required: 'true', message: '请选择商品分类', trigger: ['change'] },
+        ],
+        goodsName: [
+          { required: 'true', message: '请输入商品名称', trigger: ['blur'] },
+        ],
+        goodsIntro: [
+          { required: 'true', message: '请输入商品简介', trigger: ['blur'] },
+        ],
+        originalPrice: [
+          { required: 'true', message: '请输入商品原价', trigger: ['blur'] },
+        ],
+        sellingPrice: [
+          { required: 'true', message: '请输入商品售价', trigger: ['blur'] },
+        ],
+        stockNum: [
+          { required: 'true', message: '请输入商品库存', trigger: ['blur'] },
+        ],
+        tag: [
+          { required: 'true', message: '请输入商品标签', trigger: ['blur'] },
+        ],
+        goodsCoverImg: [
+          { required: 'true', message: '请上传商品主图', trigger: ['blur, change'] },
+        ],
+      },
       // 动态加载，具体用法参考https://element-plus.org/#/zh-CN/component/cascader
       cascaderProps: {
         lazy: true,
@@ -107,8 +145,60 @@ export default defineComponent({
           })
         },
       },
-
+      loading: false
     })
+
+    const editorRef = ref(null)
+    let editorInstance = null
+    onMounted(() => {
+      initEditor()
+    })
+    onBeforeMount(() => {
+      if(editorInstance) {
+        editorInstance.destroy()
+        editorInstance = null
+      }
+    })
+
+    const initEditor = () => {
+      editorInstance = new WangEditor(editorRef.value) // 初始化 wangEditor
+      Object.assign(editorInstance.config, {
+        showLinkImg: false,
+        showLinkImgAlt: false,
+        showLinkImgHref: false,
+        uploadImgMaxSize: 2 * 1024 * 1024, // 最大上传大小 2M 
+        uploadFileName: 'file', // 上传时，key 值自定义
+        uploadImgHeaders: {
+          token: getToken() || '' // 添加 token，否则没有权限调用上传接口
+        },
+        uploadImgServer, // 上传接口地址配置
+        // 图片返回格式不同，需要自定义返回格式
+        uploadImgHooks: {
+          // 主要用于回显
+          // 图片上传并返回了结果，想要自己把图片插入到编辑器中
+          // 例如服务器端返回的不是 { errno: 0, data: [...] } 这种格式，可使用 customInsert
+          customInsert: function(insertImgFn, result) {
+            console.log('result', result)
+            // result 即服务端返回的接口
+            // insertImgFn 可把图片插入到编辑器，传入图片 src ，执行函数即可
+            if(result.data) {
+              if(Array.isArray(result.data)) {
+                // 数组循环插入
+                result.data.forEach(item => insertImgFn(item))
+              } else {
+                // 单个插入
+                insertImgFn(result.data)
+              }
+            }
+          }
+        },
+        onchange() {
+          console.log('change')
+        }
+      })
+
+      editorInstance.create()
+    }
 
     // 已选分类
     const selectCategoryId = computed({
@@ -124,12 +214,49 @@ export default defineComponent({
       }
     })
 
+    const router = useRouter()
+    const handleSumbit = () => {
+      postFormRef.value
+        .validate()
+        .then(() => {
+          const postFormCopy = cloneDeep(state.postForm)
+          postFormCopy.goodsDetailContent = editorInstance.txt.html()
+          let requestApi = ''
+          if (props.isEdit) {
+            postFormCopy.id = props.id
+            requestApi = updateGoods
+          } else {
+            requestApi = createGoods
+          }
+
+          state.loading = true
+          requestApi(postFormCopy)
+            .then((res) => {
+              ElMessage.success(`${props.isEdit ? '编辑成功' : '添加成功'}`)
+              router.push({ name: 'GoodsList' })
+            })
+            .finally(() => {
+              state.loading = false
+            })
+        })
+        .catch((err) => {
+          console.log(err)
+          return false
+        })
+    }
+
+    const handleCancel = () => {
+      router.back()
+    }
+
     return {
       ...toRefs(state),
       postFormRef,
       goodsSellStatus,
-
-      selectCategoryId
+      selectCategoryId,
+      editorRef,
+      handleSumbit,
+      handleCancel
     }
   },
 })

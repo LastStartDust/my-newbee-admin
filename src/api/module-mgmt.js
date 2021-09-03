@@ -50,7 +50,7 @@ export function fetchGoodsList(query) {
 
 export function createGoods(data) {
   return request({
-    url: '/goods/list',
+    url: '/goods',
     method: 'post',
     data
   })
@@ -58,7 +58,7 @@ export function createGoods(data) {
 
 export function updateGoods(data) {
   return request({
-    url: '/goods/list',
+    url: '/goods',
     method: 'put',
     data
   })
@@ -76,7 +76,7 @@ export function updateGoodsStatus({ ids, status }) {
 
 export function fetchGoods(id) {
   return request({
-    url: `/goods/list/${id}`,
+    url: `/goods/${id}`,
     method: 'get'
   })
 }
