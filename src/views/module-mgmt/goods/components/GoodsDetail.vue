@@ -38,7 +38,6 @@
       <SingleUpload v-model:imgUrl="postForm.goodsCoverImg"></SingleUpload>
     </el-form-item>
 
-
     </el-form>
   </div>
 </template>

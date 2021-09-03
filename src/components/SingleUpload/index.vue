@@ -26,14 +26,15 @@
     </div>
   </div>
 
-  <ImagePreviewDialog :visible="dialogVisible" :img-url="imgUrl" @close="dialogVisible = false" />
+  <CustomImagePreview v-model:show="dialogVisible" :url="imgUrl"></CustomImagePreview>
+
 </template>
 <script>
 import { defineComponent, reactive, toRefs } from 'vue'
 import { uploadImgServer } from '@/utils/upload'
 import { isEmpty } from '@/utils'
 import { getToken } from '@/utils/auth'
-import ImagePreviewDialog from './components/ImagePreview.vue'
+import CustomImagePreview from '@/components/CustomImagePreview/index.vue'
 
 export default defineComponent({
   name: 'SingleUpload',
@@ -52,7 +53,7 @@ export default defineComponent({
   },
   emits: ['update:imgUrl'],
   components: {
-    ImagePreviewDialog,
+    CustomImagePreview
   },
   setup(props, { attrs, slots, emit }) {
     const state = reactive({
