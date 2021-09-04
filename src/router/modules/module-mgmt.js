@@ -53,5 +53,11 @@ export default {
       meta: { title: '编辑商品', noCache: true },
       hidden: true,
     },
+    {
+      path: 'order-list',
+      name: 'OrderList',
+      component: () => import('@/views/module-mgmt/order-mgmt/index.vue'),
+      meta: { title: '订单管理', icon: 'el-icon-s-order' },
+    },
   ],
 }
