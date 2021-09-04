@@ -55,7 +55,11 @@
       >
     </div>
 
-    <el-table :data="list" v-loading="listLoading" border>
+    <el-table :data="list" v-loading="listLoading" border @selection-change="handleSelectionChange">
+      <el-table-column
+        type="selection"
+        width="55">
+      </el-table-column>
       <el-table-column align="center" label="订单号" prop="orderNo" />
       <el-table-column align="center" label="订单总价" prop="totalPrice" />
       <el-table-column align="center" label="订单状态" prop="orderStatus">
@@ -136,6 +140,7 @@ export default defineComponent({
       list: [],
       total: 0,
       listLoading: false,
+      multipleSelection: []
     })
 
     const getList = () => {
@@ -177,6 +182,10 @@ export default defineComponent({
       // TODO
     }
 
+    const handleSelectionChange = (val) => {
+      state.multipleSelection = val
+    }
+
     onMounted(() => {
       getList()
     })
@@ -196,7 +205,8 @@ export default defineComponent({
       handleClose,
       orderStatusFilter,
       payTypeFilter,
-      handleViewDetail
+      handleViewDetail,
+      handleSelectionChange
     }
   },
 })
