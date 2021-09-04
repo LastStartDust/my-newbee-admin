@@ -39,10 +39,10 @@
     </el-card>
 
     <div class="operate-container mt15">
-      <el-button type="primary" size="small" @click="handleBatchConfig"
+      <el-button type="primary" size="small" @click="handleConfig(multipleSelectionIds)"
         >配货完成</el-button
       >
-      <el-button type="primary" size="small" @click="handleBatchSend">
+      <el-button type="primary" size="small" @click="handleSend(multipleSelectionIds)">
         <svg-icon icon-class="shipped_out"></svg-icon>
         <span>出库</span>
       </el-button>
@@ -50,7 +50,7 @@
         type="danger"
         class="el-icon-delete"
         size="small"
-        @click="handleBatchClose"
+        @click="handleClose(multipleSelectionIds)"
         >关闭订单</el-button
       >
     </div>
@@ -80,13 +80,13 @@
           <el-button
             v-if="scope.row.orderStatus === orderStatus.PAID"
             size="small"
-            @click="handleConfig(scope.row)"
+            @click="handleConfig([scope.row.orderId])"
             >配货完成</el-button
           >
           <el-button
             v-if="scope.row.orderStatus === orderStatus.PICKING_COMPLETE"
             size="small"
-            @click="handleSend(scope.row)"
+            @click="handleSend([scope.row.orderId])"
             >出库</el-button
           >
           <el-button
@@ -95,7 +95,7 @@
               scope.row.orderStatus < orderStatus.WAIT_PAID)
             "
             size="small"
-            @click="handleClose(scope.row)"
+            @click="handleClose([scope.row.orderId])"
             >关闭订单</el-button
           >
 
@@ -121,8 +121,14 @@ import {
   payWayMap,
 } from './options'
 import { cloneDeep } from 'lodash'
-import { fetchOrderList } from '@/api/module-mgmt'
+import { 
+  fetchOrderList,
+  checkDoneOrder,
+  closeOrder,
+  checkoutOrder
+ } from '@/api/module-mgmt'
 import { isEmpty } from '@/utils'
+import { ElMessageBox, ElMessage } from 'element-plus'
 
 export default defineComponent({
   name: 'OrderList',
@@ -140,7 +146,7 @@ export default defineComponent({
       list: [],
       total: 0,
       listLoading: false,
-      multipleSelection: []
+      multipleSelectionIds: []
     })
 
     const getList = () => {
@@ -162,12 +168,57 @@ export default defineComponent({
       state.listQuery = cloneDeep(defaultListQuery)
       getList()
     }
-    const handleConfig = () => {}
-    const handleSend = () => {}
-    const handleClose = () => {}
-    const handleBatchConfig = () => {}
-    const handleBatchSend = () => {}
-    const handleBatchClose = () => {}
+    const handleConfig = (ids) => {
+      ElMessageBox.confirm('确定配货完成吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+      .then(() => {
+        checkDoneOrder(ids)
+        .then(() => {
+          ElMessage.success('配货操作成功')
+          getList()
+        })
+      })
+      .catch(() => {
+        ElMessage.info('已取消操作')
+      });
+    }
+    const handleSend = (ids) => {
+      ElMessageBox.confirm('确定出库吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+      .then(() => {
+        checkoutOrder(ids)
+        .then(() => {
+          ElMessage.success('出库操作成功')
+          getList()
+        })
+      })
+      .catch(() => {
+        ElMessage.info('已取消操作')
+      });
+    }
+    const handleClose = (ids) => {
+      ElMessageBox.confirm('确定要关闭订单吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+      .then(() => {
+        closeOrder(ids)
+        .then(() => {
+          ElMessage.success('关闭订单操作成功')
+          getList()
+        })
+      })
+      .catch(() => {
+        ElMessage.info('已取消操作')
+      });
+    }
 
     const orderStatusFilter = (v) => {
       if (isEmpty(v)) {
@@ -183,7 +234,7 @@ export default defineComponent({
     }
 
     const handleSelectionChange = (val) => {
-      state.multipleSelection = val
+      state.multipleSelectionIds = val.map(item => item.orderId)
     }
 
     onMounted(() => {
@@ -197,9 +248,6 @@ export default defineComponent({
       resetQuery,
       listQueryRef,
       getList,
-      handleBatchConfig,
-      handleBatchSend,
-      handleBatchClose,
       handleConfig,
       handleSend,
       handleClose,

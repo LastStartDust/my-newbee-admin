@@ -95,3 +95,36 @@ export function fetchOrderList(query) {
     params: query
   })
 }
+
+// 出库
+export function checkoutOrder(ids) {
+  return request({
+    url: '/orders/checkOut',
+    method: 'put',
+    data: {
+      ids,
+    }
+  })
+}
+
+// 关闭订单
+export function closeOrder(ids) {
+  return request({
+    url: '/orders/close',
+    method: 'put',
+    data: {
+      ids,
+    }
+  })
+}
+
+// 配货成功
+export function checkDoneOrder(ids) {
+  return request({
+    url: '/orders/checkDone',
+    method: 'put',
+    data: {
+      ids,
+    }
+  })
+}
