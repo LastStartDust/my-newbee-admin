@@ -88,3 +88,10 @@ export function fetchCategories(params) {
     params
   })
 }
+
+export function fetchOrderList(query) {
+  return request({
+    url: '/orders',
+    params: query
+  })
+}
