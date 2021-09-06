@@ -59,5 +59,12 @@ export default {
       component: () => import('@/views/module-mgmt/order-mgmt/index.vue'),
       meta: { title: '订单管理', icon: 'el-icon-s-order' },
     },
-  ],
+    {
+      path: 'order-detail',
+      name: 'OrderDetail',
+      component: () => import('@/views/module-mgmt/order-mgmt/detail.vue'),
+      meta: { title: '订单详情', noCache: true },
+      hidden: true
+    }
+  ]
 }

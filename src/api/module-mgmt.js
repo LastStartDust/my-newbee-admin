@@ -128,3 +128,9 @@ export function checkDoneOrder(ids) {
     }
   })
 }
+
+export function fetchOrder(id) {
+  return request({
+    url: `/orders/${id}`
+  })
+}

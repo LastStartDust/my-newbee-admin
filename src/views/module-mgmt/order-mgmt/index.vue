@@ -129,11 +129,12 @@ import {
  } from '@/api/module-mgmt'
 import { isEmpty } from '@/utils'
 import { ElMessageBox, ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'OrderList',
   setup(props, { attrs, slots, emit }) {
-    // const { title } = toRefs(props)
+    const router = useRouter()
     const listQueryRef = ref(null)
     const defaultListQuery = {
       pageNumber: 1,
@@ -230,7 +231,7 @@ export default defineComponent({
       return payWayMap[v] || '未知'
     }
     const handleViewDetail = (row) => {
-      // TODO
+      router.push({ name: 'OrderDetail', query: { id: row.orderId } })
     }
 
     const handleSelectionChange = (val) => {
