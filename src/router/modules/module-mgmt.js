@@ -65,6 +65,12 @@ export default {
       component: () => import('@/views/module-mgmt/order-mgmt/detail.vue'),
       meta: { title: '订单详情', noCache: true },
       hidden: true
+    },
+    {
+      path: 'guest-list',
+      name: 'GuestList',
+      component: () => import('@/views/module-mgmt/guest-mgmt/index.vue'),
+      meta: { title: '会员管理', icon: 'guest' },
     }
   ]
 }

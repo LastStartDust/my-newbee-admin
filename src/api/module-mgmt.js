@@ -134,3 +134,32 @@ export function fetchOrder(id) {
     url: `/orders/${id}`
   })
 }
+
+export function fetchGuestList(query) {
+  return request({
+    url: '/users',
+    params: query
+  })
+}
+
+// 解除账户禁用
+export function solveGuest(ids) {
+  return request({
+    url: '/users/0',
+    method: 'put',
+    data: {
+      ids,
+    }
+  })
+}
+
+// 禁用账户
+export function forbidGuest(ids) {
+  return request({
+    url: '/users/1',
+    method: 'put',
+    data: {
+      ids
+    }
+  })
+}
