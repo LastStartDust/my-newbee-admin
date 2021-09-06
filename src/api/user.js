@@ -22,3 +22,19 @@ export function logout() {
     method: 'delete'
   })
 }
+
+export function updateUserName(data) {
+  return request({
+    url: '/adminUser/name',
+    method: 'put',
+    data
+  })
+}
+
+export function updateUserPassword(data) {
+  return request({
+    url: '/adminUser/password',
+    method: 'put',
+    data
+  })
+}
