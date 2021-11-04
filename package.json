@@ -5,6 +5,7 @@
     "dev": "vite --mode development",
     "build:staging": "vite build --mode staging",
     "build": "vite build  --mode production",
+    "build:subpath": "vite build --base=/newbee-admin/  --mode production",
     "serve": "vite preview"
   },
   "dependencies": {
