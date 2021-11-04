@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-import { svgBuilder } from './src/plugins/svg-builder'
+import viteSvgIcons from 'vite-plugin-svg-icons'
 import { viteMockServe } from 'vite-plugin-mock'
 import settings from './src/settings'
 import VitePluginElementPlus from 'vite-plugin-element-plus'
@@ -23,7 +23,12 @@ export default ({mode}) => {
         // useSource: true
         format: mode === 'development' ? 'esm' : 'cjs',
       }),
-      svgBuilder('./src/icons/svg/'),
+      viteSvgIcons({
+        // 指定需要缓存的图标文件夹
+        iconDirs: [path.resolve(process.cwd(), 'src/icons')],
+        // 指定symbolId格式
+        symbolId: 'icon-[dir]-[name]',
+      }),
       viteMockServe({
         mockPath: 'mock/api',
         // close support .ts file
