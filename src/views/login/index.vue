@@ -49,7 +49,7 @@ export default defineComponent({
     // const { title } = toRefs(props)
     const postForm = reactive({
       username: 'admin',
-      password: 'admin',
+      password: '123456',
     })
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
