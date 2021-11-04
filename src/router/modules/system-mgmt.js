@@ -8,7 +8,8 @@ export default {
   name: 'SystemMgmt',
   meta: {
     title: '系统管理',
-    icon: 'el-icon-setting'
+    icon: 'el-icon-setting',
+    roles: ['admin']
   },
   children: [
     {

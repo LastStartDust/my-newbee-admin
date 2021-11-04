@@ -7,7 +7,7 @@ export default {
   alwaysShow: true, // will always show the root menu
   name: 'Permission',
   meta: {
-    title: 'Permission',
+    title: '权限管理',
     icon: 'lock',
     roles: ['admin', 'editor'], // you can set roles in root nav
   },
@@ -17,8 +17,7 @@ export default {
       component: () => import('@/views/permission/page.vue'),
       name: 'PagePermission',
       meta: {
-        title: 'Page Permission',
-        roles: ['admin'], // or you can only set roles in sub nav
+        title: '页面权限',
       },
     },
     {
@@ -26,7 +25,7 @@ export default {
       component: () => import('@/views/permission/directive.vue'),
       name: 'DirectivePermission',
       meta: {
-        title: 'Directive Permission',
+        title: '指令权限',
         // if do not set roles, means: this page does not require permission
       },
     },

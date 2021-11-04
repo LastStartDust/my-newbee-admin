@@ -14,7 +14,7 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const handleRolesChange = () => {
-      router.push({ path: '/permission/index?' + +new Date() })
+      router.push({ path: '/permission?' + +new Date() })
     }
     return {
       handleRolesChange
