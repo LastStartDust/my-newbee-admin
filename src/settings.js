@@ -1,5 +1,5 @@
 export default {
-  title: 'MyNewbeeAdmin',
+  title: 'newbee-admin',
 
   /**
    * @type {boolean} true | false
