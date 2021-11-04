@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
 // token的键名称
-const TokenKey = 'my-newbee-admin_token'
+const TokenKey = 'newbee-admin_token'
 
 export function getToken() {
   return Cookies.get(TokenKey)

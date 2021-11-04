@@ -1,13 +1,13 @@
-## my-newbee-admin
+## newbee-admin
 
 ## 启动
 
 ```bash
 # 克隆项目
-git clone git@gitee.com:violet-mio/my-newbee-admin.git
+git clone git@gitee.com:violet-mio/newbee-admin.git
 
 # 进入项目目录
-cd my-newbee-admin
+cd newbee-admin
 
 # 新建并切换到template分支
 git checkout -b template origin/template

@@ -14,11 +14,11 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'D:\open-source-projects\vue3\my-newbee-admin\node_modules\esbuild\esbuild.exe'
+  Error: EPERM: operation not permitted, unlink 'D:\open-source-projects\vue3\newbee-admin\node_modules\esbuild\esbuild.exe'
 
 npm manifest: 
   {
-    "name": "my-newbee-admin",
+    "name": "newbee-admin",
     "version": "0.0.0",
     "scripts": {
       "dev": "vite --mode development",
