@@ -29,6 +29,7 @@
     "sass": "^1.37.5",
     "vite": "^2.4.4",
     "vite-plugin-element-plus": "^0.0.12",
-    "vite-plugin-mock": "^2.9.5"
+    "vite-plugin-mock": "^2.9.5",
+    "vite-plugin-svg-icons": "^1.0.5"
   }
 }

@@ -2,7 +2,9 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { useElementPlus } from '@/plugins/element-plus';
 import router from '@/router/index';
-import '@/styles/index.scss';
+import '@/styles/index.scss'
+// 引入svg注册脚本
+import 'virtual:svg-icons-register'
 import svgIcon from '@/components/svgIcon/index.vue'
 import store from '@/store';
 // 目前版本不支持主题色修改，待element-plus迁移scss到css完成
