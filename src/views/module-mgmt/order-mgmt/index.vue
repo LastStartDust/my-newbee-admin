@@ -43,7 +43,7 @@
         >配货完成</el-button
       >
       <el-button type="primary" size="small" @click="handleSend(multipleSelectionIds)">
-        <svg-icon icon-class="shipped_out"></svg-icon>
+        <svg-icon name="shipped_out"></svg-icon>
         <span>出库</span>
       </el-button>
       <el-button

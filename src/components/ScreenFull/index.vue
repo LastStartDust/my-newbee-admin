@@ -1,7 +1,7 @@
 <template>
   <div class="screen-full">
     <svg-icon
-      :icon-class="iconClass"
+      :name="iconName"
       @click="toggle"
     />
   </div>
@@ -14,14 +14,14 @@ export default defineComponent({
   name: "ScreenFull",
   setup() {
     const { isFullscreen, toggle } = useFullscreen()
-    const iconClass = computed(() => {
+    const iconName = computed(() => {
       return isFullscreen.value ? 'exit-fullscreen' : 'full-screen'
     })
 
     return {
       isFullscreen,
       toggle,
-      iconClass
+      iconName
     };
   },
 });
