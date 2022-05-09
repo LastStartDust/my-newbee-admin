@@ -4,6 +4,7 @@ export default {
   path: '/permission',
   component: Layout,
   redirect: '/permission/page',
+  hidden: true,
   alwaysShow: true, // will always show the root menu
   name: 'Permission',
   meta: {
