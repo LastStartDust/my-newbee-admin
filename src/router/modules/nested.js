@@ -8,6 +8,7 @@ export default {
       title: 'Nested',
       icon: 'nested'
     },
+    hidden: true,
     redirect: { name: 'Menu1' },
     children: [
       {
