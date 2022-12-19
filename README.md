@@ -1,6 +1,6 @@
 ## newbee-admin
 
-[线上预览 http://203.195.134.62](http://203.195.134.62)
+[线上预览 https://newbee.vmio.cc/](https://newbee.vmio.cc/)
 
 ## 启动
 
